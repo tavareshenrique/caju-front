@@ -69,10 +69,27 @@ const ALERT_DIALOG_MAPPER = {
 			},
 		},
 	},
+	DELETE: {
+		title: 'Deletar registro',
+		description: (name: string) =>
+			`Tem certeza que deseja deletar o registro do(a) ${name}`,
+		actions: {
+			confirm: {
+				text: 'Deletar',
+				bgcolor: 'rgb(218, 58, 71)',
+			},
+			cancel: {
+				text: 'Cancelar',
+				bgcolor: 'rgb(192, 192, 192)',
+			},
+		},
+	},
 };
 
+type TRegistrationCardStatus = TRegistrationStatus | 'DELETE';
+
 const RegistrationCard = (props: Props) => {
-	const [status, setStatus] = useState<TRegistrationStatus | null>(null);
+	const [status, setStatus] = useState<TRegistrationCardStatus | null>(null);
 
 	const queryClient = useQueryClient();
 
@@ -89,12 +106,33 @@ const RegistrationCard = (props: Props) => {
 		},
 	});
 
-	function handleRegistrationStatus(status: TRegistrationStatus) {
+	const deleteMutation = useMutation({
+		mutationFn: async ({ id }: { id: string }) => {
+			await api.delete(`/registrations/${id}`);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['registrations'],
+			});
+		},
+	});
+
+	function handleRegistrationStatus(status: TRegistrationCardStatus) {
 		setStatus(status);
 	}
 
 	function handleConfirmationAction() {
 		if (!status) return;
+
+		if (status === 'DELETE') {
+			deleteMutation.mutate({
+				id: props.data.id,
+			});
+
+			setStatus(null);
+
+			return;
+		}
 
 		updateStatusMutation.mutate({
 			id: props.data.id,
@@ -156,7 +194,12 @@ const RegistrationCard = (props: Props) => {
 						</ButtonSmall>
 					</AlertDialog.Trigger>
 
-					<HiOutlineTrash />
+					<AlertDialog.Trigger
+						asChild
+						onClick={() => handleRegistrationStatus('DELETE')}
+					>
+						<HiOutlineTrash />
+					</AlertDialog.Trigger>
 				</S.Actions>
 			</S.Card>
 
