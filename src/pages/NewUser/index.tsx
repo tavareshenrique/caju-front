@@ -10,6 +10,7 @@ import * as S from './styles';
 
 const NewUserPage = () => {
 	const history = useHistory();
+
 	const goToHome = () => {
 		history.push(routes.dashboard);
 	};
