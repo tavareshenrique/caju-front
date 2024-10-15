@@ -61,14 +61,18 @@ const RegistrationCard = (props: Props) => {
 			<S.Actions>
 				<ButtonSmall
 					bgcolor="rgb(255, 145, 154)"
-					disabled={props.data.status === 'REJECTED'}
+					disabled={
+						props.data.status === 'REJECTED' || props.data.status === 'APPROVED'
+					}
 					onClick={() => handleRegistrationAction('REJECTED')}
 				>
 					Reprovar
 				</ButtonSmall>
 				<ButtonSmall
 					bgcolor="rgb(155, 229, 155)"
-					disabled={props.data.status === 'APPROVED'}
+					disabled={
+						props.data.status === 'APPROVED' || props.data.status === 'REJECTED'
+					}
 					onClick={() => handleRegistrationAction('APPROVED')}
 				>
 					Aprovar
