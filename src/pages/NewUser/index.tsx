@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
@@ -16,18 +17,28 @@ const NewUserPage = () => {
 	};
 
 	return (
-		<S.Container>
-			<S.Card>
-				<IconButton onClick={() => goToHome()} aria-label="back">
-					<HiOutlineArrowLeft size={24} />
-				</IconButton>
-				<TextField placeholder="Nome" label="Nome" />
-				<TextField placeholder="Email" label="Email" type="email" />
-				<TextField placeholder="CPF" label="CPF" />
-				<TextField label="Data de admissão" type="date" />
-				<Button onClick={() => {}}>Cadastrar</Button>
-			</S.Card>
-		</S.Container>
+		<>
+			<Helmet>
+				<title>Adicionar Novo Candidato | Caju</title>
+				<meta
+					name="description"
+					content="Página de adição de novos candidatos da Caju."
+				/>
+			</Helmet>
+
+			<S.Container>
+				<S.Card>
+					<IconButton onClick={() => goToHome()} aria-label="back">
+						<HiOutlineArrowLeft size={24} />
+					</IconButton>
+					<TextField placeholder="Nome" label="Nome" />
+					<TextField placeholder="Email" label="Email" type="email" />
+					<TextField placeholder="CPF" label="CPF" />
+					<TextField label="Data de admissão" type="date" />
+					<Button onClick={() => {}}>Cadastrar</Button>
+				</S.Card>
+			</S.Container>
+		</>
 	);
 };
 
