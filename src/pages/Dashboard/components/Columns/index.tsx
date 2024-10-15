@@ -9,9 +9,9 @@ export enum ERegistrationStatus {
 }
 
 const allColumns = [
+	{ status: ERegistrationStatus.PENDING, title: 'Pronto para revisar' },
 	{ status: ERegistrationStatus.APPROVED, title: 'Aprovado' },
 	{ status: ERegistrationStatus.REJECTED, title: 'Reprovado' },
-	{ status: ERegistrationStatus.PENDING, title: 'Pronto para revisar' },
 ];
 
 type Props = {

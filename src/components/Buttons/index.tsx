@@ -28,6 +28,11 @@ export const ButtonSmall = styled.button<{
 	background-color: ${(props) => props.bgcolor ?? 'none'};
 	color: ${(props) => props.color ?? '#000'};
 	cursor: pointer;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 `;
 
 export default Button;
