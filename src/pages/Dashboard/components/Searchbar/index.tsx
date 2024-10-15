@@ -20,11 +20,20 @@ export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
 		history.push(routes.newUser);
 	}
 
+	function maskCpf(cpf: string) {
+		return cpf
+			.replace(/\D/g, '')
+			.replace(/(\d{3})(\d)/, '$1.$2')
+			.replace(/(\d{3})(\d)/, '$1.$2')
+			.replace(/(\d{3})(\d{1,2})/, '$1-$2')
+			.replace(/(-\d{2})\d+?$/, '$1');
+	}
+
 	return (
 		<S.Container>
 			<TextField
 				placeholder="Digite um CPF válido"
-				value={searchValue}
+				value={maskCpf(searchValue)}
 				onChange={(e) => onSearch(e.target.value)}
 			/>
 			<S.Actions>

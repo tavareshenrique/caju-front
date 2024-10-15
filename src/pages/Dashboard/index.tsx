@@ -29,8 +29,10 @@ const DashboardPage = () => {
 	const { data: registrationsData } = useQuery({
 		queryKey: ['registrations', cpfDebounced],
 		queryFn: async () => {
+			const cpfWithoutMask = cpfDebounced.replace(/\D/g, '');
+
 			const url = cpfDebounced
-				? `/registrations?cpf=${cpfDebounced}`
+				? `/registrations?cpf=${cpfWithoutMask}`
 				: '/registrations';
 
 			return (await api.get<IRegistration[]>(url)).data;
