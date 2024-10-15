@@ -26,7 +26,7 @@ Sinta-se a vontade para refatorar, criar novas pastas, componentes, hooks, utils
 ### Tela Dashboard
 
 [X] - Implementar `GET` ao carregar a pagina e ao fazer pequisa por `CPF`
-[] - Filtrar os cards por coluna, usando o status.
+[X] - Filtrar os cards por coluna, usando o status.
 [] - Implementar `PUT` ao clicar em Reprovar e alterar o status para `REPROVED`
 [] - Implementar `PUT` ao clicar em Aprovar e alterar o status para `APPROVED`
 [] - Implementar `PUT` ao clicar em Revisar novamente e alterar o status para `REVIEW`
