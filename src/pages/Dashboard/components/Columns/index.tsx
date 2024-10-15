@@ -1,27 +1,39 @@
+import { IRegistration } from '../..';
 import RegistrationCard from '../RegistrationCard';
 import * as S from './styles';
 
+export enum ERegistrationStatus {
+	APPROVED = 'APPROVED',
+	REJECTED = 'REJECTED',
+	PENDING = 'PENDING',
+}
+
 const allColumns = [
-	{ status: 'REVIEW', title: 'Pronto para revisar' },
-	{ status: 'APPROVED', title: 'Aprovado' },
-	{ status: 'REPROVED', title: 'Reprovado' },
+	{ status: ERegistrationStatus.APPROVED, title: 'Aprovado' },
+	{ status: ERegistrationStatus.REJECTED, title: 'Reprovado' },
+	{ status: ERegistrationStatus.PENDING, title: 'Pronto para revisar' },
 ];
 
 type Props = {
-	registrations?: any[];
+	registrations?: IRegistration[];
 };
-const Collumns = (props: Props) => {
+
+const Columns = (props: Props) => {
 	return (
 		<S.Container>
-			{allColumns.map((collum) => {
+			{allColumns.map((column) => {
 				return (
-					<S.Column status={collum.status} key={collum.title}>
+					<S.Column status={column.status} key={column.title}>
 						<>
-							<S.TitleColumn status={collum.status}>
-								{collum.title}
+							<S.TitleColumn status={column.status}>
+								{column.title}
 							</S.TitleColumn>
-							<S.CollumContent>
-								{props?.registrations?.map((registration) => {
+							<S.ColumContent>
+								{props.registrations?.map((registration) => {
+									if (registration.status !== column.status) {
+										return null;
+									}
+
 									return (
 										<RegistrationCard
 											data={registration}
@@ -29,7 +41,7 @@ const Collumns = (props: Props) => {
 										/>
 									);
 								})}
-							</S.CollumContent>
+							</S.ColumContent>
 						</>
 					</S.Column>
 				);
@@ -37,4 +49,4 @@ const Collumns = (props: Props) => {
 		</S.Container>
 	);
 };
-export default Collumns;
+export default Columns;
