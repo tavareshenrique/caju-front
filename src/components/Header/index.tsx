@@ -15,8 +15,13 @@ export const Header = styled.header`
 	align-items: center;
 	padding: 0px 24px;
 
+	img {
+		margin-left: 8px;
+	}
+
 	h1 {
 		color: #fff;
 		font-size: 24px;
+		margin-left: 16px;
 	}
 `;
