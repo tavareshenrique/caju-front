@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import useDebounce from '@/hooks/useDebounce';
 import api from '@/libs/axios';
@@ -49,13 +50,23 @@ const DashboardPage = () => {
 	}
 
 	return (
-		<S.Container>
-			<SearchBar searchValue={cpf} onSearch={handleSearch} />
-			<Columns
-				registrations={registrationsData}
-				registrationIsLoading={registrationIsLoading}
-			/>
-		</S.Container>
+		<>
+			<Helmet>
+				<title>Registro de Candidatos | Caju</title>
+				<meta
+					name="description"
+					content="Página de registros de candidatos da Caju."
+				/>
+			</Helmet>
+
+			<S.Container>
+				<SearchBar searchValue={cpf} onSearch={handleSearch} />
+				<Columns
+					registrations={registrationsData}
+					registrationIsLoading={registrationIsLoading}
+				/>
+			</S.Container>
+		</>
 	);
 };
 export default DashboardPage;
