@@ -26,18 +26,19 @@ const DashboardPage = () => {
 
 	const queryClient = useQueryClient();
 
-	const { data: registrationsData } = useQuery({
-		queryKey: ['registrations', cpfDebounced],
-		queryFn: async () => {
-			const cpfWithoutMask = cpfDebounced.replace(/\D/g, '');
+	const { data: registrationsData, isLoading: registrationIsLoading } =
+		useQuery({
+			queryKey: ['registrations', cpfDebounced],
+			queryFn: async () => {
+				const cpfWithoutMask = cpfDebounced.replace(/\D/g, '');
 
-			const url = cpfDebounced
-				? `/registrations?cpf=${cpfWithoutMask}`
-				: '/registrations';
+				const url = cpfDebounced
+					? `/registrations?cpf=${cpfWithoutMask}`
+					: '/registrations';
 
-			return (await api.get<IRegistration[]>(url)).data;
-		},
-	});
+				return (await api.get<IRegistration[]>(url)).data;
+			},
+		});
 
 	function handleSearch(cpfValue: string) {
 		queryClient.invalidateQueries({
@@ -50,7 +51,10 @@ const DashboardPage = () => {
 	return (
 		<S.Container>
 			<SearchBar searchValue={cpf} onSearch={handleSearch} />
-			<Columns registrations={registrationsData} />
+			<Columns
+				registrations={registrationsData}
+				registrationIsLoading={registrationIsLoading}
+			/>
 		</S.Container>
 	);
 };

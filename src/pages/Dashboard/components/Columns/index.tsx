@@ -1,3 +1,5 @@
+import { Skeleton } from '@/components/Skeleton';
+
 import { IRegistration } from '../..';
 import RegistrationCard from '../RegistrationCard';
 import * as S from './styles';
@@ -16,6 +18,7 @@ const allColumns = [
 
 type Props = {
 	registrations?: IRegistration[];
+	registrationIsLoading: boolean;
 };
 
 const Columns = (props: Props) => {
@@ -29,18 +32,30 @@ const Columns = (props: Props) => {
 								{column.title}
 							</S.TitleColumn>
 							<S.ColumContent>
-								{props.registrations?.map((registration) => {
-									if (registration.status !== column.status) {
-										return null;
-									}
+								{props.registrationIsLoading ? (
+									<Skeleton
+										size={{
+											height: 144,
+											width: '100%',
+										}}
+										count={2}
+									/>
+								) : (
+									<>
+										{props.registrations?.map((registration) => {
+											if (registration.status !== column.status) {
+												return null;
+											}
 
-									return (
-										<RegistrationCard
-											data={registration}
-											key={registration.id}
-										/>
-									);
-								})}
+											return (
+												<RegistrationCard
+													data={registration}
+													key={registration.id}
+												/>
+											);
+										})}
+									</>
+								)}
 							</S.ColumContent>
 						</>
 					</S.Column>

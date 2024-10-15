@@ -43,6 +43,11 @@ export const TitleColumn = styled.h3<{ status: TRegistrationStatus }>`
 `;
 
 export const ColumContent = styled.div`
+	display: flex;
+	flex-direction: column;
+
 	overflow: auto;
+	gap: 16px;
 	max-height: 85%;
+	padding: 16px;
 `;
