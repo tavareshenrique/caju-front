@@ -7,21 +7,31 @@ import TextField from '@/components/TextField';
 import routes from '@/router/routes';
 
 import * as S from './styles';
-export const SearchBar = () => {
+
+interface ISearchBarProps {
+	searchValue: string;
+	onSearch: (cpf: string) => void;
+}
+
+export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
 	const history = useHistory();
 
-	const goToNewAdmissionPage = () => {
+	function handleGoToNewAdmissionPage() {
 		history.push(routes.newUser);
-	};
+	}
 
 	return (
 		<S.Container>
-			<TextField placeholder="Digite um CPF válido" />
+			<TextField
+				placeholder="Digite um CPF válido"
+				value={searchValue}
+				onChange={(e) => onSearch(e.target.value)}
+			/>
 			<S.Actions>
 				<IconButton aria-label="refetch">
 					<HiRefresh />
 				</IconButton>
-				<Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
+				<Button onClick={handleGoToNewAdmissionPage}>Nova Admissão</Button>
 			</S.Actions>
 		</S.Container>
 	);

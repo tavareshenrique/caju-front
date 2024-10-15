@@ -1,5 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
+import useDebounce from '@/hooks/useDebounce';
 import api from '@/libs/axios';
 
 import Columns from './components/Columns';
@@ -18,21 +20,34 @@ export interface IRegistration {
 }
 
 const DashboardPage = () => {
-	const {
-		data: registrationsData,
-		// isLoading,
-		// error,
-	} = useQuery({
-		queryKey: ['registrations'],
+	const [cpf, setCpf] = useState('');
+
+	const cpfDebounced = useDebounce(cpf, 500);
+
+	const queryClient = useQueryClient();
+
+	const { data: registrationsData } = useQuery({
+		queryKey: ['registrations', cpfDebounced],
 		queryFn: async () => {
-			return (await api.get<IRegistration[]>('/registrations')).data;
+			const url = cpfDebounced
+				? `/registrations?cpf=${cpfDebounced}`
+				: '/registrations';
+
+			return (await api.get<IRegistration[]>(url)).data;
 		},
-		// select: (data) => makeOrderDetails(data),
 	});
+
+	function handleSearch(cpfValue: string) {
+		queryClient.invalidateQueries({
+			queryKey: ['registrations'],
+		});
+
+		setCpf(cpfValue.trim());
+	}
 
 	return (
 		<S.Container>
-			<SearchBar />
+			<SearchBar searchValue={cpf} onSearch={handleSearch} />
 			<Columns registrations={registrationsData} />
 		</S.Container>
 	);
