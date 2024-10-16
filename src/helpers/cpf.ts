@@ -1,5 +1,5 @@
-function applyMask(cpf: string) {
-	return cpf
+function applyMask(cpfValue: string) {
+	return cpfValue
 		.replace(/\D/g, '')
 		.replace(/(\d{3})(\d)/, '$1.$2')
 		.replace(/(\d{3})(\d)/, '$1.$2')
@@ -7,8 +7,8 @@ function applyMask(cpf: string) {
 		.replace(/(-\d{2})\d+?$/, '$1');
 }
 
-function removeMask(cpf: string) {
-	return cpf.replace(/\D/g, '');
+function removeMask(cpfValue: string) {
+	return cpfValue.replace(/\D/g, '');
 }
 
 function validator(cpfValue: string) {
