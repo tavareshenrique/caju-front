@@ -4,7 +4,7 @@
       "admissionDate": "22/10/2023",
       "email": "luiz@caju.com.br",
       "employeeName": "Luiz Filho",
-      "status": "APPROVED",
+      "status": "PENDING",
       "cpf": "56642105087",
       "id": "3"
     },
@@ -21,8 +21,16 @@
       "admissionDate": "22/10/2023",
       "email": "jose@caju.com.br",
       "employeeName": "José Leão",
-      "status": "PENDING",
+      "status": "APPROVED",
       "cpf": "78502270001"
+    },
+    {
+      "id": "ad235066-a9e2-4ce2-83ee-e65c6c0b2f88",
+      "admissionDate": "15/10/2024",
+      "cpf": "16747802730",
+      "email": "ihenrits@gmail.com",
+      "employeeName": "Henrique",
+      "status": "APPROVED"
     }
   ]
 }
