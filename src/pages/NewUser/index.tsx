@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Helmet } from 'react-helmet';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
@@ -10,15 +11,17 @@ import Button from '@/components/Buttons';
 import { IconButton } from '@/components/Buttons/IconButton';
 import TextField from '@/components/TextField';
 import { cpf } from '@/helpers/cpf';
-import { createRegistration } from '@/repositories/create-registration';
+import { createRegistrationUseCase } from '@/repositories/create-registration';
+import { CpfAlreadyExistsError } from '@/repositories/errors/cpf-already-exists-error';
+import { NameFirstLetterIsNumberError } from '@/repositories/errors/name-first-letter-is-number-error';
 import routes from '@/router/routes';
 
 import * as S from './styles';
 
 const newRegistrationSchema = z.object({
 	id: z.string().uuid(),
-	admissionDate: z.string(),
 	email: z.string().email('O email deve ser válido'),
+	admissionDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data inválida'),
 	status: z.string().default('PENDING'),
 	employeeName: z
 		.string()
@@ -35,7 +38,8 @@ const NewUserPage = () => {
 	const {
 		handleSubmit,
 		control,
-		// formState: { errors },
+		formState: { errors },
+		setError,
 	} = useForm<TNewRegistrationSchema>({
 		resolver: zodResolver(newRegistrationSchema),
 		defaultValues: {
@@ -54,11 +58,40 @@ const NewUserPage = () => {
 		history.push(routes.dashboard);
 	};
 
-	const onSubmit = handleSubmit(async (data) => {
-		await createRegistration(data);
+	const onSubmit = handleSubmit(
+		async ({ admissionDate, cpf, email, employeeName, id, status }) => {
+			try {
+				await createRegistrationUseCase({
+					admissionDate,
+					cpf,
+					email,
+					employeeName,
+					id,
+					status,
+				});
 
-		goToHome();
-	});
+				goToHome();
+			} catch (error) {
+				if (error instanceof CpfAlreadyExistsError) {
+					setError('cpf', {
+						message: error.message,
+					});
+
+					toast.error(error.message);
+				}
+
+				if (error instanceof NameFirstLetterIsNumberError) {
+					console.log(error);
+
+					setError('employeeName', {
+						message: error.message,
+					});
+
+					toast.error(error.message);
+				}
+			}
+		},
+	);
 
 	return (
 		<>
@@ -80,7 +113,12 @@ const NewUserPage = () => {
 						name="employeeName"
 						control={control}
 						render={({ field }) => (
-							<TextField {...field} placeholder="Nome" label="Nome" />
+							<TextField
+								{...field}
+								placeholder="Nome"
+								label="Nome"
+								error={errors.employeeName?.message}
+							/>
 						)}
 					/>
 
@@ -93,6 +131,7 @@ const NewUserPage = () => {
 								placeholder="Email"
 								label="Email"
 								type="email"
+								error={errors.email?.message}
 							/>
 						)}
 					/>
@@ -100,8 +139,14 @@ const NewUserPage = () => {
 					<Controller
 						name="cpf"
 						control={control}
-						render={({ field }) => (
-							<TextField {...field} placeholder="CPF" label="CPF" />
+						render={({ field: { onChange, value } }) => (
+							<TextField
+								placeholder="CPF"
+								label="CPF"
+								value={cpf.applyMask(value)}
+								onChange={(e) => onChange(cpf.applyMask(e.target.value))}
+								error={errors.cpf?.message}
+							/>
 						)}
 					/>
 
@@ -109,7 +154,12 @@ const NewUserPage = () => {
 						name="admissionDate"
 						control={control}
 						render={({ field }) => (
-							<TextField {...field} label="Data de admissão" type="date" />
+							<TextField
+								{...field}
+								label="Data de admissão"
+								type="date"
+								error={errors.admissionDate?.message}
+							/>
 						)}
 					/>
 					<Button type="submit">Cadastrar</Button>
