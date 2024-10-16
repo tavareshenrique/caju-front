@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import useDebounce from './useDebounce';
+import useDebounce from './';
 
 vi.useFakeTimers();
 

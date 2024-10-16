@@ -1,21 +1,21 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { Controller } from 'react-hook-form';
 import { HiRefresh } from 'react-icons/hi';
 
 import { IconButton } from '@/components/Buttons/IconButton';
 import TextField from '@/components/TextField';
 import { cpf } from '@/helpers/cpf';
 
+import { useSearchForm } from '../../hooks/useSearchForm';
 import { NewRegisterButton } from '../NewRegisterButton';
 import * as S from './styles';
 
-interface ISearchBarProps {
-	searchValue: string;
-	onSearch: (cpf: string) => void;
-}
-function SearchBar({ searchValue, onSearch }: ISearchBarProps) {
+function SearchBar() {
 	const queryClient = useQueryClient();
 
-	function handleRefreshData() {
+	const { control } = useSearchForm();
+
+	function onInvalidateRegistrationQuery() {
 		queryClient.invalidateQueries({
 			queryKey: ['registrations'],
 		});
@@ -23,13 +23,23 @@ function SearchBar({ searchValue, onSearch }: ISearchBarProps) {
 
 	return (
 		<S.Container>
-			<TextField
-				placeholder="Digite um CPF válido"
-				value={cpf.applyMask(searchValue)}
-				onChange={(e) => onSearch(e.target.value)}
+			<Controller
+				name="cpf"
+				control={control}
+				render={({ field: { onChange, value } }) => (
+					<TextField
+						placeholder="Digite um CPF válido"
+						value={cpf.applyMask(value)}
+						onChange={(e) => onChange(cpf.applyMask(e.target.value))}
+					/>
+				)}
 			/>
+
 			<S.Actions>
-				<IconButton aria-label="refetch" onClick={handleRefreshData}>
+				<IconButton
+					aria-label="refetch"
+					onClick={onInvalidateRegistrationQuery}
+				>
 					<HiRefresh />
 				</IconButton>
 				<NewRegisterButton />

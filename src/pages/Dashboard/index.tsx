@@ -1,6 +1,8 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
+import { FormProvider, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import useDebounce from '@/hooks/useDebounce';
 import { fetchRegistrationsUseCase } from '@/repositories/fetch-registrations';
@@ -9,12 +11,23 @@ import { Columns } from './components/Columns';
 import { SearchBar } from './components/Searchbar';
 import * as S from './styles';
 
+const searchSchema = z.object({
+	cpf: z.string(),
+});
+
+export type TSearchSchema = z.infer<typeof searchSchema>;
+
 function DashboardPage() {
-	const [cpf, setCpf] = useState('');
+	const methods = useForm<TSearchSchema>({
+		resolver: zodResolver(searchSchema),
+		defaultValues: {
+			cpf: '',
+		},
+	});
+
+	const cpf = methods.watch('cpf');
 
 	const cpfValue = useDebounce(cpf, 500);
-
-	const queryClient = useQueryClient();
 
 	const { data: registrationsData, isLoading: registrationIsLoading } =
 		useQuery({
@@ -23,16 +36,8 @@ function DashboardPage() {
 			queryFn: async () => fetchRegistrationsUseCase(cpfValue),
 		});
 
-	function handleSearchCpf(cpfValue: string) {
-		queryClient.invalidateQueries({
-			queryKey: ['registrations'],
-		});
-
-		setCpf(cpfValue.trim());
-	}
-
 	return (
-		<>
+		<FormProvider {...methods}>
 			<Helmet>
 				<title>Registro de Candidatos | Caju</title>
 				<meta
@@ -42,13 +47,13 @@ function DashboardPage() {
 			</Helmet>
 
 			<S.Container>
-				<SearchBar searchValue={cpf} onSearch={handleSearchCpf} />
+				<SearchBar />
 				<Columns
 					registrations={registrationsData}
 					registrationIsLoading={registrationIsLoading}
 				/>
 			</S.Container>
-		</>
+		</FormProvider>
 	);
 }
 
