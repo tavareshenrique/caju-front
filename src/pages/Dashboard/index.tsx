@@ -3,45 +3,27 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import useDebounce from '@/hooks/useDebounce';
-import api from '@/libs/axios';
+import { fetchRegistrationsUseCase } from '@/repositories/fetch-registrations';
 
-import Columns from './components/Columns';
+import { Columns } from './components/Columns';
 import { SearchBar } from './components/Searchbar';
 import * as S from './styles';
 
-export type TRegistrationStatus = 'APPROVED' | 'REJECTED' | 'PENDING';
-
-export interface IRegistration {
-	id: string;
-	admissionDate: string;
-	email: string;
-	employeeName: string;
-	status: TRegistrationStatus;
-	cpf: string;
-}
-
-const DashboardPage = () => {
+function DashboardPage() {
 	const [cpf, setCpf] = useState('');
 
-	const cpfDebounced = useDebounce(cpf, 500);
+	const cpfValue = useDebounce(cpf, 500);
 
 	const queryClient = useQueryClient();
 
 	const { data: registrationsData, isLoading: registrationIsLoading } =
 		useQuery({
-			queryKey: ['registrations', cpfDebounced],
-			queryFn: async () => {
-				const cpfWithoutMask = cpfDebounced.replace(/\D/g, '');
-
-				const url = cpfDebounced
-					? `/registrations?cpf=${cpfWithoutMask}`
-					: '/registrations';
-
-				return (await api.get<IRegistration[]>(url)).data;
-			},
+			queryKey: ['registrations', cpfValue],
+			refetchOnWindowFocus: true,
+			queryFn: async () => fetchRegistrationsUseCase(cpfValue),
 		});
 
-	function handleSearch(cpfValue: string) {
+	function handleSearchCpf(cpfValue: string) {
 		queryClient.invalidateQueries({
 			queryKey: ['registrations'],
 		});
@@ -60,7 +42,7 @@ const DashboardPage = () => {
 			</Helmet>
 
 			<S.Container>
-				<SearchBar searchValue={cpf} onSearch={handleSearch} />
+				<SearchBar searchValue={cpf} onSearch={handleSearchCpf} />
 				<Columns
 					registrations={registrationsData}
 					registrationIsLoading={registrationIsLoading}
@@ -68,5 +50,6 @@ const DashboardPage = () => {
 			</S.Container>
 		</>
 	);
-};
-export default DashboardPage;
+}
+
+export { DashboardPage };

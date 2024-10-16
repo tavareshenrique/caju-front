@@ -1,6 +1,6 @@
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import DashboardPage from '@/pages/Dashboard';
+import { DashboardPage } from '@/pages/Dashboard';
 import NewUserPage from '@/pages/NewUser';
 
 import routes from './routes';

@@ -1,7 +1,8 @@
 import { Skeleton } from '@/components/Skeleton';
+import { TRegistration } from '@/repositories/interfaces/registration';
 
-import { IRegistration } from '../..';
-import RegistrationCard from '../RegistrationCard';
+import { RegistrationCard } from '../RegistrationCard';
+import { EmptyRegister } from './EmptyRegister';
 import * as S from './styles';
 
 export enum ERegistrationStatus {
@@ -16,12 +17,19 @@ const allColumns = [
 	{ status: ERegistrationStatus.REJECTED, title: 'Reprovado' },
 ];
 
-type Props = {
-	registrations?: IRegistration[];
+interface IColumnsProps {
+	registrations?: TRegistration[];
 	registrationIsLoading: boolean;
-};
+}
 
-const Columns = (props: Props) => {
+function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
+	const hasRegistrations = registrations && registrations.length > 0;
+	const hasNoRegistrations = !registrationIsLoading && !hasRegistrations;
+
+	if (hasNoRegistrations) {
+		return <EmptyRegister />;
+	}
+
 	return (
 		<S.Container>
 			{allColumns.map((column) => {
@@ -32,30 +40,32 @@ const Columns = (props: Props) => {
 								{column.title}
 							</S.TitleColumn>
 							<S.ColumContent>
-								{props.registrationIsLoading ? (
-									<Skeleton
-										size={{
-											height: 144,
-											width: '100%',
-										}}
-										count={2}
-									/>
-								) : (
-									<>
-										{props.registrations?.map((registration) => {
-											if (registration.status !== column.status) {
-												return null;
-											}
+								<>
+									{registrationIsLoading ? (
+										<Skeleton
+											size={{
+												height: 144,
+												width: '100%',
+											}}
+											count={2}
+										/>
+									) : (
+										<>
+											{registrations?.map((registration) => {
+												if (registration.status !== column.status) {
+													return null;
+												}
 
-											return (
-												<RegistrationCard
-													data={registration}
-													key={registration.id}
-												/>
-											);
-										})}
-									</>
-								)}
+												return (
+													<RegistrationCard
+														data={registration}
+														key={registration.id}
+													/>
+												);
+											})}
+										</>
+									)}
+								</>
 							</S.ColumContent>
 						</>
 					</S.Column>
@@ -63,5 +73,6 @@ const Columns = (props: Props) => {
 			})}
 		</S.Container>
 	);
-};
-export default Columns;
+}
+
+export { Columns };

@@ -1,0 +1,92 @@
+import { HiOutlineTrash } from 'react-icons/hi';
+
+import { AlertDialog } from '@/components/AlertDialog';
+import { ButtonSmall } from '@/components/Buttons';
+import { TRegistrationStatus } from '@/repositories/interfaces/registration';
+
+import { TRegistrationCardStatus } from '../..';
+
+interface IRegistrationCardCommonProps {
+	status: TRegistrationStatus;
+	onRegisterStatus: (status: TRegistrationCardStatus) => void;
+}
+
+const APPROVED = {
+	color: 'rgb(155, 229, 155)',
+	text: 'Aprovar',
+};
+
+function Approved({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
+	const isApproveButtonDisabled =
+		status === 'APPROVED' || status === 'REJECTED';
+
+	return (
+		<AlertDialog.Trigger asChild>
+			<ButtonSmall
+				bgcolor={APPROVED.color}
+				disabled={isApproveButtonDisabled}
+				onClick={() => onRegisterStatus('APPROVED')}
+			>
+				{APPROVED.text}
+			</ButtonSmall>
+		</AlertDialog.Trigger>
+	);
+}
+
+const REJECT = {
+	color: 'rgb(255, 145, 154)',
+	text: 'Reprovar',
+};
+
+function Reject({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
+	const isRejectedButtonDisabled =
+		status === 'REJECTED' || status === 'APPROVED';
+
+	return (
+		<AlertDialog.Trigger asChild>
+			<ButtonSmall
+				bgcolor={REJECT.color}
+				disabled={isRejectedButtonDisabled}
+				onClick={() => onRegisterStatus('REJECTED')}
+			>
+				{REJECT.text}
+			</ButtonSmall>
+		</AlertDialog.Trigger>
+	);
+}
+
+const PENDING = {
+	color: '#ff8858',
+	text: '	Revisar novamente',
+};
+
+function Pending({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
+	const isPendingButtonDisabled = status === 'PENDING';
+
+	return (
+		<AlertDialog.Trigger asChild>
+			<ButtonSmall
+				bgcolor={PENDING.color}
+				disabled={isPendingButtonDisabled}
+				onClick={() => onRegisterStatus('PENDING')}
+			>
+				{PENDING.text}
+			</ButtonSmall>
+		</AlertDialog.Trigger>
+	);
+}
+
+function Delete({ onRegisterStatus }: IRegistrationCardCommonProps) {
+	return (
+		<AlertDialog.Trigger asChild onClick={() => onRegisterStatus('DELETE')}>
+			<HiOutlineTrash />
+		</AlertDialog.Trigger>
+	);
+}
+
+export const RegistrationCardAction = {
+	Approved,
+	Reject,
+	Pending,
+	Delete,
+};

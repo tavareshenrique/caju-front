@@ -1,38 +1,21 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { HiRefresh } from 'react-icons/hi';
-import { useHistory } from 'react-router-dom';
 
-import Button from '@/components/Buttons';
 import { IconButton } from '@/components/Buttons/IconButton';
 import TextField from '@/components/TextField';
-import routes from '@/router/routes';
+import { cpf } from '@/helpers/cpf';
 
+import { NewRegisterButton } from '../NewRegisterButton';
 import * as S from './styles';
 
 interface ISearchBarProps {
 	searchValue: string;
 	onSearch: (cpf: string) => void;
 }
-
-export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
-	const history = useHistory();
-
+function SearchBar({ searchValue, onSearch }: ISearchBarProps) {
 	const queryClient = useQueryClient();
 
-	function handleGoToNewAdmissionPage() {
-		history.push(routes.newUser);
-	}
-
-	function maskCpf(cpf: string) {
-		return cpf
-			.replace(/\D/g, '')
-			.replace(/(\d{3})(\d)/, '$1.$2')
-			.replace(/(\d{3})(\d)/, '$1.$2')
-			.replace(/(\d{3})(\d{1,2})/, '$1-$2')
-			.replace(/(-\d{2})\d+?$/, '$1');
-	}
-
-	function handleRefresh() {
+	function handleRefreshData() {
 		queryClient.invalidateQueries({
 			queryKey: ['registrations'],
 		});
@@ -42,15 +25,17 @@ export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
 		<S.Container>
 			<TextField
 				placeholder="Digite um CPF válido"
-				value={maskCpf(searchValue)}
+				value={cpf.applyMask(searchValue)}
 				onChange={(e) => onSearch(e.target.value)}
 			/>
 			<S.Actions>
-				<IconButton aria-label="refetch" onClick={handleRefresh}>
+				<IconButton aria-label="refetch" onClick={handleRefreshData}>
 					<HiRefresh />
 				</IconButton>
-				<Button onClick={handleGoToNewAdmissionPage}>Nova Admissão</Button>
+				<NewRegisterButton />
 			</S.Actions>
 		</S.Container>
 	);
-};
+}
+
+export { SearchBar };

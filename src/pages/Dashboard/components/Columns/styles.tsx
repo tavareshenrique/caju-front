@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { TRegistrationStatus } from '../..';
+import { TRegistrationStatus } from '@/repositories/interfaces/registration';
 
 const registrationStatusStyles: {
 	[key in string]: { background: string; title: string };

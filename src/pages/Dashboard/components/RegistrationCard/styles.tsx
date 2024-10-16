@@ -38,9 +38,3 @@ export const Actions = styled.div`
 		cursor: pointer;
 	}
 `;
-
-export const AlertDialogActions = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	gap: 8px;
-`;
