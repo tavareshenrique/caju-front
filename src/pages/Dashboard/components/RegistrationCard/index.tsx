@@ -7,20 +7,22 @@ import {
 } from 'react-icons/hi';
 
 import { AlertDialog } from '@/components/AlertDialog';
-import api from '@/libs/axios';
+import {
+	changeRegistrationStatus,
+	IRegistrationStatus,
+} from '@/repositories/change-registration-status';
+import {
+	deleteRegistration,
+	IDeleteRegistration,
+} from '@/repositories/delete-registration';
 import {
 	TRegistration,
 	TRegistrationStatus,
 } from '@/repositories/interfaces/registration';
 
-import { RegistrationCardAction } from './components/RegistrationCardAcion';
+import { RegistrationCardAction } from './components/RegistrationCardAction';
 import { RegistrationCardAlert } from './components/RegistrationCardAlert';
 import * as S from './styles';
-
-interface IMutationFnParams {
-	id: string;
-	newStatus: TRegistrationStatus;
-}
 
 export type TRegistrationCardStatus = TRegistrationStatus | 'DELETE';
 
@@ -34,9 +36,10 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 	const queryClient = useQueryClient();
 
 	const updateStatusMutation = useMutation({
-		mutationFn: async ({ id, newStatus }: IMutationFnParams) => {
-			await api.patch(`/registrations/${id}`, {
-				status: newStatus,
+		mutationFn: async ({ id, newStatus }: IRegistrationStatus) => {
+			changeRegistrationStatus({
+				id,
+				newStatus,
 			});
 		},
 		onSuccess: () => {
@@ -47,8 +50,8 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 	});
 
 	const deleteMutation = useMutation({
-		mutationFn: async ({ id }: { id: string }) => {
-			await api.delete(`/registrations/${id}`);
+		mutationFn: async ({ id }: IDeleteRegistration) => {
+			deleteRegistration({ id });
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({

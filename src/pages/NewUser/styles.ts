@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from '@/components/Buttons';
 import { _IconButtonStyled } from '@/components/Buttons/IconButton';
 
-export const Container = styled.div`
+export const Container = styled.form`
 	display: flex;
 	align-items: center;
 	justify-content: center;
