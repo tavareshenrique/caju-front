@@ -1,7 +1,14 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { MdClear } from 'react-icons/md';
 
-import { Input, TextFieldContainer, TextFieldContent } from './style';
+import {
+	Container,
+	ErrorText,
+	Input,
+	Label,
+	TextFieldContainer,
+	TextFieldContent,
+} from './style';
 
 type TTextFieldProps = {
 	label?: string;
@@ -11,13 +18,19 @@ type TTextFieldProps = {
 
 const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 	({ label, id, error, value, onClearIconClick, ...rest }, ref) => {
-		return (
-			<>
-				{label && <label htmlFor={id}>{label}</label>}
+		const hasError = !!error;
 
-				<TextFieldContainer>
+		return (
+			<Container>
+				{label && (
+					<Label $error={hasError} htmlFor={id}>
+						{label}
+					</Label>
+				)}
+
+				<TextFieldContainer $error={hasError}>
 					<TextFieldContent>
-						<Input {...rest} id={id} ref={ref} />
+						<Input {...rest} id={id} ref={ref} value={value} />
 
 						{onClearIconClick && (
 							<button
@@ -30,9 +43,10 @@ const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 							</button>
 						)}
 					</TextFieldContent>
-					<span style={{ fontSize: 12, color: 'red' }}>{error}</span>
 				</TextFieldContainer>
-			</>
+
+				<ErrorText>{error}</ErrorText>
+			</Container>
 		);
 	},
 );
