@@ -2,7 +2,7 @@ import Lottie from 'lottie-react';
 
 import { useSearchForm } from '@/pages/Dashboard/hooks/useSearchForm';
 
-import emptyLottie from '../../../../../../public/assets/lotties/empty.json';
+import emptyLottie from '../../../../../assets/lotties/empty.json';
 import { NewRegisterButton } from '../../NewRegisterButton';
 import * as S from './styles';
 
@@ -20,14 +20,14 @@ function EmptyRegister() {
 
 	const hasCpfValue = cpf !== '';
 
+	const text = hasCpfValue
+		? EMPTY_REGISTER_TEXT.withCpf
+		: EMPTY_REGISTER_TEXT.withoutCpf;
+
 	return (
 		<S.Container>
 			<Lottie animationData={emptyLottie} loop={true} />
-			<p>
-				{hasCpfValue
-					? EMPTY_REGISTER_TEXT.withCpf
-					: EMPTY_REGISTER_TEXT.withoutCpf}
-			</p>
+			<p>{text}</p>
 
 			{!hasCpfValue && <NewRegisterButton />}
 		</S.Container>

@@ -1,4 +1,17 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import {
+	DragDropContext,
+	Draggable,
+	Droppable,
+	DropResult,
+} from 'react-beautiful-dnd';
+
 import { Skeleton } from '@/components/Skeleton';
+import {
+	changeRegistrationStatusUseCase,
+	IRegistrationStatus,
+} from '@/repositories/change-registration-status';
 import { TRegistration } from '@/repositories/interfaces/registration';
 
 import { RegistrationCard } from '../RegistrationCard';
@@ -23,53 +36,178 @@ interface IColumnsProps {
 }
 
 function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
+	const [columns, setColumns] = useState<
+		| {
+				[key in ERegistrationStatus]: {
+					title: string;
+					items: TRegistration[];
+				};
+		  }
+		| null
+	>(null);
+
 	const hasRegistrations = registrations && registrations.length > 0;
 	const hasNoRegistrations = !registrationIsLoading && !hasRegistrations;
 
-	if (hasNoRegistrations) {
+	const queryClient = useQueryClient();
+
+	const updateStatusMutation = useMutation({
+		mutationFn: async ({ id, newStatus }: IRegistrationStatus) =>
+			changeRegistrationStatusUseCase({
+				id,
+				newStatus,
+			}),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['registrations'],
+			});
+		},
+	});
+
+	const onDragEnd = (result: DropResult) => {
+		const { source, destination } = result;
+
+		if (!destination || !columns) return;
+
+		if (source.droppableId === destination.droppableId) {
+			const column = columns[source.droppableId as ERegistrationStatus];
+
+			const copiedItems = [...column.items];
+
+			const [removed] = copiedItems.splice(source.index, 1);
+
+			copiedItems.splice(destination.index, 0, removed);
+
+			setColumns({
+				...columns,
+				[source.droppableId as ERegistrationStatus]: {
+					...column,
+					items: copiedItems,
+				},
+			});
+		} else {
+			const sourceColumn = columns[source.droppableId as ERegistrationStatus];
+
+			const destColumn =
+				columns[destination.droppableId as ERegistrationStatus];
+
+			const sourceItems = [...sourceColumn.items];
+
+			const destItems = [...destColumn.items];
+
+			const [removed] = sourceItems.splice(source.index, 1);
+
+			destItems.splice(destination.index, 0, removed);
+
+			setColumns({
+				...columns,
+				[source.droppableId as ERegistrationStatus]: {
+					...sourceColumn,
+					items: sourceItems,
+				},
+				[destination.droppableId as ERegistrationStatus]: {
+					...destColumn,
+					items: destItems,
+				},
+			});
+		}
+
+		updateStatusMutation.mutate({
+			id: result.draggableId,
+			newStatus: destination.droppableId as ERegistrationStatus,
+		});
+	};
+
+	useEffect(() => {
+		if (registrations) {
+			const initialColumns = {
+				[ERegistrationStatus.PENDING]: {
+					title: 'Pronto para revisar',
+					items:
+						registrations?.filter(
+							(r) => r.status === ERegistrationStatus.PENDING,
+						) || [],
+				},
+				[ERegistrationStatus.APPROVED]: {
+					title: 'Aprovado',
+					items:
+						registrations?.filter(
+							(r) => r.status === ERegistrationStatus.APPROVED,
+						) || [],
+				},
+				[ERegistrationStatus.REJECTED]: {
+					title: 'Reprovado',
+					items:
+						registrations?.filter(
+							(r) => r.status === ERegistrationStatus.REJECTED,
+						) || [],
+				},
+			};
+
+			setColumns(initialColumns);
+		}
+	}, [registrations]);
+
+	if (hasNoRegistrations || !columns) {
 		return <EmptyRegister />;
 	}
 
 	return (
-		<S.Container>
-			{allColumns.map((column) => {
-				return (
-					<S.Column $status={column.status} key={column.title}>
-						<S.TitleColumn $status={column.status}>
-							{column.title}
-						</S.TitleColumn>
-						<S.ColumContent>
-							<>
-								{registrationIsLoading ? (
-									<Skeleton
-										size={{
-											height: 144,
-											width: '100%',
-										}}
-										count={2}
-									/>
-								) : (
-									<>
-										{registrations?.map((registration) => {
-											if (registration.status !== column.status) {
-												return null;
-											}
-
-											return (
-												<RegistrationCard
-													data={registration}
-													key={registration.id}
-												/>
-											);
-										})}
-									</>
-								)}
-							</>
-						</S.ColumContent>
-					</S.Column>
-				);
-			})}
-		</S.Container>
+		<DragDropContext onDragEnd={onDragEnd}>
+			<S.Container>
+				{allColumns.map((column) => (
+					<Droppable droppableId={column.status} key={column.status}>
+						{(provided) => (
+							<S.Column
+								$status={column.status}
+								{...provided.droppableProps}
+								ref={provided.innerRef}
+							>
+								<S.TitleColumn $status={column.status}>
+									{column.title}
+								</S.TitleColumn>
+								<S.ColumContent>
+									{registrationIsLoading ? (
+										<Skeleton
+											size={{
+												height: 144,
+												width: '100%',
+											}}
+											count={2}
+										/>
+									) : (
+										<>
+											{columns[column.status]?.items?.map(
+												(registration, index) => (
+													<Draggable
+														key={registration.id}
+														draggableId={registration.id.toString()}
+														index={index}
+													>
+														{(provided) => (
+															<div
+																ref={provided.innerRef}
+																{...provided.draggableProps}
+																{...provided.dragHandleProps}
+															>
+																<RegistrationCard
+																	data={registration}
+																	key={registration.id}
+																/>
+															</div>
+														)}
+													</Draggable>
+												),
+											)}
+										</>
+									)}
+								</S.ColumContent>
+							</S.Column>
+						)}
+					</Droppable>
+				))}
+			</S.Container>
+		</DragDropContext>
 	);
 }
 
