@@ -95,7 +95,7 @@ function RegistrationCardAlert({
 				<S.AlertDialogActions>
 					<AlertDialog.Action asChild>
 						<Button
-							bgcolor={ALERT_DIALOG_MAPPER[status].actions.cancel.bgcolor}
+							$bgcolor={ALERT_DIALOG_MAPPER[status].actions.cancel.bgcolor}
 						>
 							{ALERT_DIALOG_MAPPER[status].actions.cancel.text}
 						</Button>
@@ -103,7 +103,7 @@ function RegistrationCardAlert({
 
 					<AlertDialog.Action asChild onClick={handleConfirmationAction}>
 						<Button
-							bgcolor={ALERT_DIALOG_MAPPER[status].actions.confirm.bgcolor}
+							$bgcolor={ALERT_DIALOG_MAPPER[status].actions.confirm.bgcolor}
 						>
 							{ALERT_DIALOG_MAPPER[status].actions.confirm.text}
 						</Button>

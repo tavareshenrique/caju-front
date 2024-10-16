@@ -34,40 +34,38 @@ function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
 		<S.Container>
 			{allColumns.map((column) => {
 				return (
-					<S.Column status={column.status} key={column.title}>
-						<>
-							<S.TitleColumn status={column.status}>
-								{column.title}
-							</S.TitleColumn>
-							<S.ColumContent>
-								<>
-									{registrationIsLoading ? (
-										<Skeleton
-											size={{
-												height: 144,
-												width: '100%',
-											}}
-											count={2}
-										/>
-									) : (
-										<>
-											{registrations?.map((registration) => {
-												if (registration.status !== column.status) {
-													return null;
-												}
+					<S.Column $status={column.status} key={column.title}>
+						<S.TitleColumn $status={column.status}>
+							{column.title}
+						</S.TitleColumn>
+						<S.ColumContent>
+							<>
+								{registrationIsLoading ? (
+									<Skeleton
+										size={{
+											height: 144,
+											width: '100%',
+										}}
+										count={2}
+									/>
+								) : (
+									<>
+										{registrations?.map((registration) => {
+											if (registration.status !== column.status) {
+												return null;
+											}
 
-												return (
-													<RegistrationCard
-														data={registration}
-														key={registration.id}
-													/>
-												);
-											})}
-										</>
-									)}
-								</>
-							</S.ColumContent>
-						</>
+											return (
+												<RegistrationCard
+													data={registration}
+													key={registration.id}
+												/>
+											);
+										})}
+									</>
+								)}
+							</>
+						</S.ColumContent>
 					</S.Column>
 				);
 			})}

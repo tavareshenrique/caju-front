@@ -27,18 +27,18 @@ export const Container = styled.div`
 	margin-top: 24px;
 `;
 
-export const Column = styled.div<{ status: TRegistrationStatus }>`
+export const Column = styled.div<{ $status: string }>`
 	height: auto;
-	background-color: ${({ status }) =>
-		registrationStatusStyles[status].background};
+	background-color: ${({ $status }) =>
+		registrationStatusStyles[$status].background};
 	border-radius: 32px;
 	min-height: 80vh;
 	max-height: 80vh;
 `;
 
-export const TitleColumn = styled.h3<{ status: TRegistrationStatus }>`
+export const TitleColumn = styled.h3<{ $status: TRegistrationStatus }>`
 	margin: 0px;
-	color: ${({ status }) => registrationStatusStyles[status].title};
+	color: ${({ $status }) => registrationStatusStyles[$status].title};
 	margin: 24px;
 `;
 

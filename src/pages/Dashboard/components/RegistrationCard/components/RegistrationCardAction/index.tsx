@@ -23,7 +23,7 @@ function Approved({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
 	return (
 		<AlertDialog.Trigger asChild>
 			<ButtonSmall
-				bgcolor={APPROVED.color}
+				$bgcolor={APPROVED.color}
 				disabled={isApproveButtonDisabled}
 				onClick={() => onRegisterStatus('APPROVED')}
 			>
@@ -45,7 +45,7 @@ function Reject({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
 	return (
 		<AlertDialog.Trigger asChild>
 			<ButtonSmall
-				bgcolor={REJECT.color}
+				$bgcolor={REJECT.color}
 				disabled={isRejectedButtonDisabled}
 				onClick={() => onRegisterStatus('REJECTED')}
 			>
@@ -66,7 +66,7 @@ function Pending({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
 	return (
 		<AlertDialog.Trigger asChild>
 			<ButtonSmall
-				bgcolor={PENDING.color}
+				$bgcolor={PENDING.color}
 				disabled={isPendingButtonDisabled}
 				onClick={() => onRegisterStatus('PENDING')}
 			>
@@ -78,7 +78,7 @@ function Pending({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
 
 function Delete({ onRegisterStatus }: IRegistrationCardCommonProps) {
 	return (
-		<AlertDialog.Trigger asChild onClick={() => onRegisterStatus('DELETE')}>
+		<AlertDialog.Trigger onClick={() => onRegisterStatus('DELETE')}>
 			<HiOutlineTrash />
 		</AlertDialog.Trigger>
 	);
