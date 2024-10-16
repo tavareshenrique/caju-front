@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { HiRefresh } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
@@ -16,6 +17,8 @@ interface ISearchBarProps {
 export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
 	const history = useHistory();
 
+	const queryClient = useQueryClient();
+
 	function handleGoToNewAdmissionPage() {
 		history.push(routes.newUser);
 	}
@@ -29,6 +32,12 @@ export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
 			.replace(/(-\d{2})\d+?$/, '$1');
 	}
 
+	function handleRefresh() {
+		queryClient.invalidateQueries({
+			queryKey: ['registrations'],
+		});
+	}
+
 	return (
 		<S.Container>
 			<TextField
@@ -37,7 +46,7 @@ export const SearchBar = ({ searchValue, onSearch }: ISearchBarProps) => {
 				onChange={(e) => onSearch(e.target.value)}
 			/>
 			<S.Actions>
-				<IconButton aria-label="refetch">
+				<IconButton aria-label="refetch" onClick={handleRefresh}>
 					<HiRefresh />
 				</IconButton>
 				<Button onClick={handleGoToNewAdmissionPage}>Nova Admissão</Button>
