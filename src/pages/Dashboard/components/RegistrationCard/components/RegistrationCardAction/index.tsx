@@ -5,6 +5,7 @@ import { ButtonSmall } from '@/components/Buttons';
 import { TRegistrationStatus } from '@/repositories/interfaces/registration';
 
 import { TRegistrationCardStatus } from '../..';
+import { DeleteContainer } from './styles';
 
 interface IRegistrationCardCommonProps {
 	status: TRegistrationStatus;
@@ -78,9 +79,9 @@ function Pending({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
 
 function Delete({ onRegisterStatus }: IRegistrationCardCommonProps) {
 	return (
-		<AlertDialog.Trigger onClick={() => onRegisterStatus('DELETE')}>
+		<DeleteContainer onClick={() => onRegisterStatus('DELETE')}>
 			<HiOutlineTrash />
-		</AlertDialog.Trigger>
+		</DeleteContainer>
 	);
 }
 
