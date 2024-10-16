@@ -13,12 +13,18 @@ import * as S from './styles';
 function SearchBar() {
 	const queryClient = useQueryClient();
 
-	const { control } = useSearchForm();
+	const { control, resetField } = useSearchForm();
 
 	function onInvalidateRegistrationQuery() {
 		queryClient.invalidateQueries({
 			queryKey: ['registrations'],
 		});
+	}
+
+	function handleResetCpfField() {
+		resetField('cpf');
+
+		onInvalidateRegistrationQuery();
 	}
 
 	return (
@@ -31,6 +37,7 @@ function SearchBar() {
 						placeholder="Digite um CPF válido"
 						value={cpf.applyMask(value)}
 						onChange={(e) => onChange(cpf.applyMask(e.target.value))}
+						onClearIconClick={handleResetCpfField}
 					/>
 				)}
 			/>
