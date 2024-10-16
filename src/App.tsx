@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet';
+import { Toaster } from 'react-hot-toast';
 
 import Router from '@/router';
 
@@ -32,6 +33,8 @@ function App() {
 			<ReactQueryProvider>
 				<Router />
 			</ReactQueryProvider>
+
+			<Toaster position="bottom-center" />
 		</>
 	);
 }
