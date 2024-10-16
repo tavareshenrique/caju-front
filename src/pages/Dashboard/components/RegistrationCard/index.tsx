@@ -8,11 +8,11 @@ import {
 
 import { AlertDialog } from '@/components/AlertDialog';
 import {
-	changeRegistrationStatus,
+	changeRegistrationStatusUseCase,
 	IRegistrationStatus,
 } from '@/repositories/change-registration-status';
 import {
-	deleteRegistration,
+	deleteRegistrationUseCase,
 	IDeleteRegistration,
 } from '@/repositories/delete-registration';
 import {
@@ -36,12 +36,11 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 	const queryClient = useQueryClient();
 
 	const updateStatusMutation = useMutation({
-		mutationFn: async ({ id, newStatus }: IRegistrationStatus) => {
-			changeRegistrationStatus({
+		mutationFn: async ({ id, newStatus }: IRegistrationStatus) =>
+			changeRegistrationStatusUseCase({
 				id,
 				newStatus,
-			});
-		},
+			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ['registrations'],
@@ -50,9 +49,8 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 	});
 
 	const deleteMutation = useMutation({
-		mutationFn: async ({ id }: IDeleteRegistration) => {
-			deleteRegistration({ id });
-		},
+		mutationFn: async ({ id }: IDeleteRegistration) =>
+			deleteRegistrationUseCase({ id }),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ['registrations'],
