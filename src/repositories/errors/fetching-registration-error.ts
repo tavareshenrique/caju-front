@@ -1,5 +1,5 @@
 export class FetchingRegistrationError extends Error {
 	constructor() {
-		super('Error fetching registration data');
+		super('Falha ao buscar o registro');
 	}
 }

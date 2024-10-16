@@ -4,7 +4,7 @@ import { HiRefresh } from 'react-icons/hi';
 
 import { IconButton } from '@/components/Buttons/IconButton';
 import TextField from '@/components/TextField';
-import { cpf } from '@/helpers/cpf';
+import { cpf } from '@/utils/cpf';
 
 import { useSearchForm } from '../../hooks/useSearchForm';
 import { NewRegisterButton } from '../NewRegisterButton';

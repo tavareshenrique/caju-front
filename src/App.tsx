@@ -20,12 +20,7 @@ function App() {
 			</Helmet>
 
 			<Header>
-				<img
-					src="../public/assets/images/caju.png"
-					alt=""
-					height={48}
-					width={32}
-				/>
+				<img src="/assets/images/caju.png" alt="" height={48} width={32} />
 
 				<h1>Caju - Registro de Candidatos</h1>
 			</Header>

@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 import useDebounce from '@/hooks/useDebounce';
 import { fetchRegistrationsUseCase } from '@/repositories/fetch-registrations';
+import { cpf } from '@/utils/cpf';
 
 import { Columns } from './components/Columns';
 import { SearchBar } from './components/Searchbar';
@@ -25,15 +26,20 @@ function DashboardPage() {
 		},
 	});
 
-	const cpf = methods.watch('cpf');
-
-	const cpfValue = useDebounce(cpf, 500);
+	const cpfValue = useDebounce(methods.watch('cpf'), 500);
 
 	const { data: registrationsData, isLoading: registrationIsLoading } =
 		useQuery({
 			queryKey: ['registrations', cpfValue],
 			refetchOnWindowFocus: true,
-			queryFn: async () => fetchRegistrationsUseCase(cpfValue),
+			queryFn: async () => {
+				const cpfWithoutMask = cpf.removeMask(cpfValue || '');
+
+				return fetchRegistrationsUseCase({
+					key: 'cpf',
+					value: cpfWithoutMask,
+				});
+			},
 		});
 
 	return (

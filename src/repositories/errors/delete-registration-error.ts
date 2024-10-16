@@ -1,5 +1,5 @@
 export class DeleteRegistrationError extends Error {
 	constructor() {
-		super('Failed to delete registration');
+		super('Falha ao deletar o registro');
 	}
 }

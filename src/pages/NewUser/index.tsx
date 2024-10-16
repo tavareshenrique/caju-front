@@ -10,11 +10,11 @@ import { z } from 'zod';
 import Button from '@/components/Buttons';
 import { IconButton } from '@/components/Buttons/IconButton';
 import TextField from '@/components/TextField';
-import { cpf } from '@/helpers/cpf';
 import { createRegistrationUseCase } from '@/repositories/create-registration';
-import { CpfAlreadyExistsError } from '@/repositories/errors/cpf-already-exists-error';
-import { NameFirstLetterIsNumberError } from '@/repositories/errors/name-first-letter-is-number-error';
+import { ResourceAlreadyExistsError } from '@/repositories/errors/resource-already-exists';
+import { ValidationError } from '@/repositories/errors/validation-error';
 import routes from '@/router/routes';
+import { cpf } from '@/utils/cpf';
 
 import * as S from './styles';
 
@@ -65,6 +65,14 @@ const NewUserPage = () => {
 		history.push(routes.dashboard);
 	};
 
+	function handleError(error: ResourceAlreadyExistsError | ValidationError) {
+		setError(error.property as keyof TNewRegistrationSchema, {
+			message: error.message,
+		});
+
+		toast.error(error.message);
+	}
+
 	const onSubmit = handleSubmit(
 		async ({ admissionDate, cpf, email, employeeName, id, status }) => {
 			try {
@@ -79,22 +87,11 @@ const NewUserPage = () => {
 
 				goToHome();
 			} catch (error) {
-				if (error instanceof CpfAlreadyExistsError) {
-					setError('cpf', {
-						message: error.message,
-					});
-
-					toast.error(error.message);
-				}
-
-				if (error instanceof NameFirstLetterIsNumberError) {
-					console.log(error);
-
-					setError('employeeName', {
-						message: error.message,
-					});
-
-					toast.error(error.message);
+				if (
+					error instanceof ResourceAlreadyExistsError ||
+					error instanceof ValidationError
+				) {
+					handleError(error);
 				}
 			}
 		},
@@ -125,6 +122,7 @@ const NewUserPage = () => {
 								placeholder="Nome"
 								label="Nome"
 								error={errors.employeeName?.message}
+								fullWidth
 							/>
 						)}
 					/>
@@ -139,6 +137,7 @@ const NewUserPage = () => {
 								label="Email"
 								type="email"
 								error={errors.email?.message}
+								fullWidth
 							/>
 						)}
 					/>
@@ -153,6 +152,7 @@ const NewUserPage = () => {
 								value={cpf.applyMask(value)}
 								onChange={(e) => onChange(cpf.applyMask(e.target.value))}
 								error={errors.cpf?.message}
+								fullWidth
 							/>
 						)}
 					/>
@@ -166,6 +166,7 @@ const NewUserPage = () => {
 								label="Data de admissão"
 								type="date"
 								error={errors.admissionDate?.message}
+								fullWidth
 							/>
 						)}
 					/>

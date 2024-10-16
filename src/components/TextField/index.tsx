@@ -13,11 +13,15 @@ import {
 type TTextFieldProps = {
 	label?: string;
 	error?: string;
+	fullWidth?: boolean;
 	onClearIconClick?: () => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
-	({ label, id, error, value, onClearIconClick, ...rest }, ref) => {
+	(
+		{ label, id, error, value, fullWidth = false, onClearIconClick, ...rest },
+		ref,
+	) => {
 		const hasError = !!error;
 
 		return (
@@ -28,7 +32,7 @@ const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 					</Label>
 				)}
 
-				<TextFieldContainer $error={hasError}>
+				<TextFieldContainer $error={hasError} $fullWidth={fullWidth}>
 					<TextFieldContent>
 						<Input {...rest} id={id} ref={ref} value={value} />
 

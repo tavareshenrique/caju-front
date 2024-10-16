@@ -21,9 +21,11 @@ export const Input = styled.input`
 	font-weight: normal;
 `;
 
-export const TextFieldContainer = styled.div<{ $error: boolean }>`
-	flex: 1;
-	width: 100%;
+export const TextFieldContainer = styled.div<{
+	$error: boolean;
+	$fullWidth: boolean;
+}>`
+	${({ $fullWidth }) => $fullWidth && 'width: 100%;'}
 
 	vertical-align: middle;
 	border-radius: 8px;

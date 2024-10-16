@@ -1,5 +1,5 @@
 export class ChangeRegistrationStatusError extends Error {
 	constructor() {
-		super('Failed to change registration status');
+		super('Falha ao alterar o status de registro');
 	}
 }

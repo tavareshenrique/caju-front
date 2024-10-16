@@ -1,17 +1,22 @@
-import { cpf } from '@/helpers/cpf';
 import api from '@/libs/axios';
 
 import { FetchingRegistrationError } from './errors/fetching-registration-error';
 import { TRegistration } from './interfaces/registration';
 
-async function fetchRegistrationsUseCase(cpfValue?: string) {
+interface IFetchRegistrationsParams {
+	key: string;
+	value: string;
+}
+
+async function fetchRegistrationsUseCase({
+	key,
+	value,
+}: IFetchRegistrationsParams) {
 	try {
 		let url = '/registrations';
 
-		if (cpfValue) {
-			const cpfWithoutMask = cpf.removeMask(cpfValue || '');
-
-			url = `/registrations?cpf=${cpfWithoutMask}`;
+		if (key && value) {
+			url = `/registrations?${key}=${value}`;
 		}
 
 		const { data } = await api.get<TRegistration[]>(url);
