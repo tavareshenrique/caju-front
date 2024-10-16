@@ -41,11 +41,11 @@ Sinta-se a vontade para refatorar, criar novas pastas, componentes, hooks, utils
 
 ### Tela Cadastro
 
-[] - Implementar validação no campo de `email` para que aceite apenas emails válidos
-[] - Implementar validação no campo `nome completo` para que aceite pelo menos um espaço, no mínimo duas letras, e que a primeira letra não seja um número.
-[] - Implementar validação no campo CPF para aceitar apenas CPFs válidos e adicionar uma máscara de CPF ao campo.
-[] - Implementar `POST` ao preencher todos os campos corretamentes.
-[] - Redirecionar ao `/dashboard` ao criar uma nova admissão.
+[X] - Implementar validação no campo de `email` para que aceite apenas emails válidos
+[X] - Implementar validação no campo `nome completo` para que aceite pelo menos um espaço, no mínimo duas letras, e que a primeira letra não seja um número.
+[X] - Implementar validação no campo CPF para aceitar apenas CPFs válidos e adicionar uma máscara de CPF ao campo.
+[X] - Implementar `POST` ao preencher todos os campos corretamentes.
+[X] - Redirecionar ao `/dashboard` ao criar uma nova admissão.
 
 
 ## API
