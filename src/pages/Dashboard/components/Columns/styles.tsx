@@ -32,8 +32,8 @@ export const Column = styled.div<{ $status: string }>`
 	background-color: ${({ $status }) =>
 		registrationStatusStyles[$status].background};
 	border-radius: 32px;
-	min-height: 80vh;
-	max-height: 80vh;
+	min-height: 75vh;
+	/* max-height: 80vh; */
 `;
 
 export const TitleColumn = styled.h3<{ $status: TRegistrationStatus }>`
@@ -48,6 +48,6 @@ export const ColumContent = styled.div`
 
 	overflow: auto;
 	gap: 16px;
-	max-height: 85%;
+	height: 100%;
 	padding: 16px;
 `;
