@@ -35,7 +35,6 @@ Sinta-se a vontade para refatorar, criar novas pastas, componentes, hooks, utils
 [X] - O botão `Revisar novamente` só deve aparecer em admissões com o status `REPROVED` ou `APPROVED`
 [X] - Implementar um loading na tela ao realizar requisições.
 [X] - Todas as ações devem ter modal de confirmação e uma notificação de sucesso ou erro
-[] - Na pesquisa por CPF realizar a requisição automaticamente ao preencher um CPF válido
 [X] - Adicionar máscara de CPF no campo de pesquisa.
 [X] - Atualizar os dados (refetch) ao clicar no ícone de atualizar
 
