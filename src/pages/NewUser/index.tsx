@@ -39,6 +39,7 @@ const NewUserPage = () => {
 		handleSubmit,
 		control,
 		formState: { errors },
+		watch,
 		setError,
 	} = useForm<TNewRegistrationSchema>({
 		resolver: zodResolver(newRegistrationSchema),
@@ -53,6 +54,12 @@ const NewUserPage = () => {
 	});
 
 	const history = useHistory();
+
+	const isSubmitButtonDisabled =
+		watch('employeeName') === '' ||
+		watch('email') === '' ||
+		watch('cpf') === '' ||
+		watch('admissionDate') === '';
 
 	const goToHome = () => {
 		history.push(routes.dashboard);
@@ -162,7 +169,9 @@ const NewUserPage = () => {
 							/>
 						)}
 					/>
-					<Button type="submit">Cadastrar</Button>
+					<Button type="submit" disabled={isSubmitButtonDisabled}>
+						Cadastrar
+					</Button>
 				</S.Card>
 			</S.Container>
 		</>
