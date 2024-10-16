@@ -8,7 +8,7 @@ export interface IRegistrationStatus {
 	newStatus: TRegistrationStatus;
 }
 
-async function changeRegistrationStatus({
+async function changeRegistrationStatusUseCase({
 	id,
 	newStatus,
 }: IRegistrationStatus) {
@@ -21,4 +21,4 @@ async function changeRegistrationStatus({
 	}
 }
 
-export { changeRegistrationStatus };
+export { changeRegistrationStatusUseCase };

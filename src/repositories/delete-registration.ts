@@ -6,7 +6,7 @@ export interface IDeleteRegistration {
 	id: string;
 }
 
-async function deleteRegistration({ id }: IDeleteRegistration) {
+async function deleteRegistrationUseCase({ id }: IDeleteRegistration) {
 	try {
 		await api.delete(`/registrations/${id}`);
 	} catch (error) {
@@ -14,4 +14,4 @@ async function deleteRegistration({ id }: IDeleteRegistration) {
 	}
 }
 
-export { deleteRegistration };
+export { deleteRegistrationUseCase };
