@@ -30,14 +30,14 @@ Sinta-se a vontade para refatorar, criar novas pastas, componentes, hooks, utils
 [X] - Implementar `PUT` ao clicar em Reprovar e alterar o status para `REPROVED`
 [X] - Implementar `PUT` ao clicar em Aprovar e alterar o status para `APPROVED`
 [X] - Implementar `PUT` ao clicar em Revisar novamente e alterar o status para `REVIEW`
-[] - Implementar `DELETE` ao clicar no lixeira no card.
+[X] - Implementar `DELETE` ao clicar no lixeira no card.
 [X] - O botão de `Reprovar` e `Aprovar` só deve aparecer em admissões com o status `REVIEW`
 [X] - O botão `Revisar novamente` só deve aparecer em admissões com o status `REPROVED` ou `APPROVED`
 [X] - Implementar um loading na tela ao realizar requisições.
-[] - Todas as ações devem ter modal de confirmação e uma notificação de sucesso ou erro
+[X] - Todas as ações devem ter modal de confirmação e uma notificação de sucesso ou erro
 [] - Na pesquisa por CPF realizar a requisição automaticamente ao preencher um CPF válido
 [X] - Adicionar máscara de CPF no campo de pesquisa.
-[] - Atualizar os dados (refetch) ao clicar no ícone de atualizar
+[X] - Atualizar os dados (refetch) ao clicar no ícone de atualizar
 
 
 ### Tela Cadastro
