@@ -17,6 +17,11 @@ const Button = styled.button<{
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	font-size: 16px;
 	font-weight: 600;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 `;
 
 export const ButtonSmall = styled.button<{
