@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
 	HiOutlineCalendar,
 	HiOutlineMail,
@@ -46,6 +47,11 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 				queryKey: ['registrations'],
 			});
 		},
+		onError: () => {
+			toast.error(
+				'Erro ao atualizar o status do registro, por favor, tente novamente!',
+			);
+		},
 	});
 
 	const deleteMutation = useMutation({
@@ -55,6 +61,9 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 			queryClient.invalidateQueries({
 				queryKey: ['registrations'],
 			});
+		},
+		onError: () => {
+			toast.error('Erro ao deletar o registro, por favor, tente novamente!');
 		},
 	});
 
@@ -74,6 +83,9 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 
 			return;
 		}
+
+		console.log('data.id', data.id);
+		console.log('status', status);
 
 		updateStatusMutation.mutate({
 			id: data.id,

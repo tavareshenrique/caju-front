@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { Error } from '@/components/Error';
 import useDebounce from '@/hooks/useDebounce';
 import { fetchRegistrationsUseCase } from '@/repositories/fetch-registrations';
 import { cpf } from '@/utils/cpf';
@@ -28,19 +29,26 @@ function DashboardPage() {
 
 	const cpfValue = useDebounce(methods.watch('cpf'), 500);
 
-	const { data: registrationsData, isLoading: registrationIsLoading } =
-		useQuery({
-			queryKey: ['registrations', cpfValue],
-			refetchOnWindowFocus: true,
-			queryFn: async () => {
-				const cpfWithoutMask = cpf.removeMask(cpfValue || '');
+	const {
+		data: registrationsData,
+		isLoading: registrationsIsLoading,
+		error: registrationsError,
+	} = useQuery({
+		queryKey: ['registrations', cpfValue],
+		refetchOnWindowFocus: true,
+		queryFn: async () => {
+			const cpfWithoutMask = cpf.removeMask(cpfValue || '');
 
-				return fetchRegistrationsUseCase({
-					key: 'cpf',
-					value: cpfWithoutMask,
-				});
-			},
-		});
+			return fetchRegistrationsUseCase({
+				key: 'cpf',
+				value: cpfWithoutMask,
+			});
+		},
+	});
+
+	if (registrationsError) {
+		return <Error />;
+	}
 
 	return (
 		<FormProvider {...methods}>
@@ -56,7 +64,7 @@ function DashboardPage() {
 				<SearchBar />
 				<Columns
 					registrations={registrationsData}
-					registrationIsLoading={registrationIsLoading}
+					registrationIsLoading={registrationsIsLoading}
 				/>
 			</S.Container>
 		</FormProvider>

@@ -6,6 +6,7 @@ import {
 	Droppable,
 	DropResult,
 } from 'react-beautiful-dnd';
+import toast from 'react-hot-toast';
 
 import { Skeleton } from '@/components/Skeleton';
 import {
@@ -61,6 +62,11 @@ function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
 			queryClient.invalidateQueries({
 				queryKey: ['registrations'],
 			});
+		},
+		onError: () => {
+			toast.error(
+				'Erro ao atualizar o status do registro, por favor, tente novamente!',
+			);
 		},
 	});
 
