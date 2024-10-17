@@ -13,7 +13,7 @@
       "admissionDate": "22/10/2023",
       "email": "filipe@caju.com.br",
       "employeeName": "Filipe Marins",
-      "status": "APPROVED",
+      "status": "PENDING",
       "cpf": "78502270001"
     },
     {
@@ -30,7 +30,7 @@
       "cpf": "27719778006",
       "email": "alexiakopke@gmail.com",
       "employeeName": "Alexia Kopke",
-      "status": "APPROVED"
+      "status": "PENDING"
     },
     {
       "id": "f09b9a86-217c-4bb4-9dfc-1aad6e6c74c6",
@@ -38,7 +38,7 @@
       "cpf": "85231736090",
       "email": "ihenrits@gmail.com",
       "employeeName": "Henrique",
-      "status": "REJECTED"
+      "status": "APPROVED"
     }
   ]
 }

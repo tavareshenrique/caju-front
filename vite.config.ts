@@ -8,6 +8,7 @@ import type { InlineConfig } from 'vitest/node';
 export default defineConfig({
 	plugins: [react(), eslintPlugin()],
 	server: {
+		host: true,
 		port: 3001,
 	},
 	resolve: {
