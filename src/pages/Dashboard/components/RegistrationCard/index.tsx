@@ -84,9 +84,6 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 			return;
 		}
 
-		console.log('data.id', data.id);
-		console.log('status', status);
-
 		updateStatusMutation.mutate({
 			id: data.id,
 			newStatus: status,
