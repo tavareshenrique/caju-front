@@ -2,8 +2,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Controller } from 'react-hook-form';
 import { HiRefresh } from 'react-icons/hi';
 
-import { IconButton } from '@/components/Buttons/IconButton';
-import TextField from '@/components/TextField';
+import { IconButton } from '@/components/atoms/Buttons/IconButton';
+import { TextField } from '@/components/molecules/TextField';
 import { cpf } from '@/utils/cpf';
 
 import { useSearchForm } from '../../hooks/useSearchForm';

@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 
 import Router from '@/router';
 
-import { Header } from './components/Header';
+import { Header } from './components/atoms/Header';
 import { ReactQueryProvider } from './libs/ReactQueryProvider';
 
 function App() {

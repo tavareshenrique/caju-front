@@ -8,7 +8,7 @@ import {
 } from 'react-beautiful-dnd';
 import toast from 'react-hot-toast';
 
-import { Skeleton } from '@/components/Skeleton';
+import { Skeleton } from '@/components/atoms/Skeleton';
 import {
 	changeRegistrationStatusUseCase,
 	IRegistrationStatus,

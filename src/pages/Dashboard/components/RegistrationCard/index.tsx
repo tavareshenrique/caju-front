@@ -7,7 +7,7 @@ import {
 	HiOutlineUser,
 } from 'react-icons/hi';
 
-import { AlertDialog } from '@/components/AlertDialog';
+import { AlertDialog } from '@/components/atoms/AlertDialog';
 import {
 	changeRegistrationStatusUseCase,
 	IRegistrationStatus,

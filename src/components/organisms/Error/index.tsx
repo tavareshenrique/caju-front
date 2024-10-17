@@ -1,6 +1,6 @@
 import Lottie from 'lottie-react';
 
-import errorLottie from '../../assets/lotties/error.json';
+import errorLottie from '../../../assets/lotties/error.json';
 import * as S from './styles';
 
 function Error() {

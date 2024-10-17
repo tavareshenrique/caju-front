@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Button from '@/components/Buttons';
-import { _IconButtonStyled } from '@/components/Buttons/IconButton';
+import Button from '@/components/atoms/Buttons';
+import { _IconButtonStyled } from '@/components/atoms/Buttons/IconButton';
 
 export const Container = styled.form`
 	display: flex;

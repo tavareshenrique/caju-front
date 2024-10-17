@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Error } from '@/components/Error';
+import { Error } from '@/components/organisms/Error';
 import useDebounce from '@/hooks/useDebounce';
 import { fetchRegistrationsUseCase } from '@/repositories/fetch-registrations';
 import { cpf } from '@/utils/cpf';

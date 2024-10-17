@@ -17,7 +17,7 @@ type TTextFieldProps = {
 	onClearIconClick?: () => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
+export const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 	(
 		{ label, id, error, value, fullWidth = false, onClearIconClick, ...rest },
 		ref,
@@ -56,5 +56,3 @@ const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 );
 
 TextField.displayName = 'TextField';
-
-export default TextField;

@@ -1,7 +1,7 @@
 import { HiOutlineTrash } from 'react-icons/hi';
 
-import { AlertDialog } from '@/components/AlertDialog';
-import { ButtonSmall } from '@/components/Buttons';
+import { AlertDialog } from '@/components/atoms/AlertDialog';
+import { ButtonSmall } from '@/components/atoms/Buttons';
 import { TRegistrationStatus } from '@/repositories/interfaces/registration';
 
 import { TRegistrationCardStatus } from '../..';

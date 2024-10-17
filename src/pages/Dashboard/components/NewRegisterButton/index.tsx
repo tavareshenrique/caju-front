@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 
-import Button from '@/components/Buttons';
+import { Button } from '@/components/atoms/Buttons';
 import routes from '@/router/routes';
 
 function NewRegisterButton() {

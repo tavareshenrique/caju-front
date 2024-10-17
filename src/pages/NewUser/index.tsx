@@ -7,9 +7,9 @@ import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 
-import Button from '@/components/Buttons';
-import { IconButton } from '@/components/Buttons/IconButton';
-import TextField from '@/components/TextField';
+import { Button } from '@/components/atoms/Buttons';
+import { IconButton } from '@/components/atoms/Buttons/IconButton';
+import { TextField } from '@/components/molecules/TextField';
 import { createRegistrationUseCase } from '@/repositories/create-registration';
 import { ResourceAlreadyExistsError } from '@/repositories/errors/resource-already-exists';
 import { ValidationError } from '@/repositories/errors/validation-error';

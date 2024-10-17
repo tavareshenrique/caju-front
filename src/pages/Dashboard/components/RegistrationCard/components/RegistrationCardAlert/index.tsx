@@ -1,5 +1,5 @@
-import { AlertDialog } from '@/components/AlertDialog';
-import Button from '@/components/Buttons';
+import { AlertDialog } from '@/components/atoms/AlertDialog';
+import { Button } from '@/components/atoms/Buttons';
 
 import { TRegistrationCardStatus } from '../..';
 import * as S from './styles';
