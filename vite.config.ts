@@ -20,6 +20,22 @@ export default defineConfig({
 		globals: true,
 		setupFiles: ['./vitest-setup.ts'],
 		environment: 'happy-dom',
+		exclude: ['**/node_modules/**', '**/__e2e__/**'],
+		coverage: {
+			provider: 'istanbul',
+			reporter: ['html'],
+			exclude: [
+				'**/node_modules/**',
+				'**/__e2e__/**',
+				'./src/App.tsx',
+				'./src/main.tsx',
+				'./src/libs/**',
+				'./src/router/**',
+				'./src/repositories/errors/**',
+				'**/playwright-report/**',
+				'.eslintrc.cjs',
+			],
+		},
 	},
 } as UserConfig & {
 	test: InlineConfig;
