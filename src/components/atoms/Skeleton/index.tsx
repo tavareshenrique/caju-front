@@ -33,7 +33,7 @@ export function Skeleton({
 			baseColor={SKELETON_BASE_COLOR}
 			highlightColor={SKELETON_HIGHLIGHT_COLOR}
 		>
-			<SkeletonContent>
+			<SkeletonContent data-testid="skeleton">
 				<ReactSkeleton
 					count={count}
 					style={{ height: size.height, width: size.width }}
