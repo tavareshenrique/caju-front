@@ -165,8 +165,8 @@ function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
 					<Droppable droppableId={column.status} key={column.status}>
 						{(provided) => (
 							<S.Column
-								$status={column.status}
 								{...provided.droppableProps}
+								$status={column.status}
 								ref={provided.innerRef}
 							>
 								<S.TitleColumn $status={column.status}>
