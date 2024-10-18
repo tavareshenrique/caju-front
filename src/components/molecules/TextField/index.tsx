@@ -19,7 +19,16 @@ type TTextFieldProps = {
 
 export const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 	(
-		{ label, id, error, value, fullWidth = false, onClearIconClick, ...rest },
+		{
+			label,
+			id,
+			error,
+			value,
+			fullWidth = false,
+			onClearIconClick,
+			onChange,
+			...rest
+		},
 		ref,
 	) => {
 		const hasError = !!error;
@@ -34,7 +43,13 @@ export const TextField = forwardRef<HTMLInputElement, TTextFieldProps>(
 
 				<TextFieldContainer $error={hasError} $fullWidth={fullWidth}>
 					<TextFieldContent>
-						<Input {...rest} id={id} ref={ref} value={value} />
+						<Input
+							{...rest}
+							id={id}
+							ref={ref}
+							value={value}
+							onChange={onChange}
+						/>
 
 						{onClearIconClick && (
 							<button
