@@ -12,7 +12,7 @@ async function makeCreateRegistration(data: TNewRegistrationSchema) {
 	const admissionDate = getAdmissionDate(data.admissionDate);
 
 	await checkCpfIsAlreadyInUse(cpf);
-	await checkIfAdmissionDateIsValid(admissionDate);
+	await checkIfAdmissionDateIsValid(data.admissionDate);
 	await checkEmailIsAlreadyInUse(data.email);
 	await checkEmployeeNameIsValid(data.email);
 
