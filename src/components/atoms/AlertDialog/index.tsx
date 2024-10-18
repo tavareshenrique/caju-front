@@ -1,5 +1,5 @@
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
-import { ReactNode } from 'react';
+import { forwardRef, ReactNode } from 'react';
 
 import { AlertDialogContent, AlertDialogOverlay } from './style';
 
@@ -19,13 +19,23 @@ function Portal({ ...rest }: AlertDialogPrimitive.AlertDialogPortalProps) {
 	return <AlertDialogPrimitive.Portal {...rest} />;
 }
 
-function Overlay({ ...rest }: AlertDialogPrimitive.AlertDialogOverlayProps) {
-	return <AlertDialogOverlay {...rest} />;
-}
+const Overlay = forwardRef<
+	HTMLDivElement,
+	AlertDialogPrimitive.AlertDialogOverlayProps
+>(({ ...rest }, ref) => {
+	return <AlertDialogOverlay {...rest} ref={ref} />;
+});
 
-function Content({ ...rest }: AlertDialogPrimitive.AlertDialogContentProps) {
-	return <AlertDialogContent {...rest} />;
-}
+Overlay.displayName = 'Overlay';
+
+const Content = forwardRef<
+	HTMLDivElement,
+	AlertDialogPrimitive.AlertDialogContentProps
+>(({ ...rest }, ref) => {
+	return <AlertDialogContent {...rest} ref={ref} />;
+});
+
+Content.displayName = 'Content';
 
 function Title({ ...rest }: AlertDialogPrimitive.AlertDialogTitleProps) {
 	return <AlertDialogPrimitive.Title {...rest} />;
