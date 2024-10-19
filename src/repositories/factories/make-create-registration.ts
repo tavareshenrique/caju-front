@@ -1,4 +1,4 @@
-import { TNewRegistrationSchema } from '@/pages/NewUser';
+import { TNewRegistrationSchema } from '@/pages/NewUser/hooks/useNewUserPage';
 
 import { getAdmissionDate } from '../helpers/get-admission-date';
 import { getCpf } from '../helpers/get-cpf';
