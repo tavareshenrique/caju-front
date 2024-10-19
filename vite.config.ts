@@ -37,6 +37,8 @@ export default defineConfig({
 				'**/*.spec.ts',
 				'**/*.spec.tsx',
 				'**/styles.ts',
+				'**/api/*.ts',
+				'**/api/*.js',
 				'./src/pages/Dashboard/index.tsx',
 				'./src/pages/NewUser/index.tsx',
 				'src/hooks/http/**',
