@@ -29,11 +29,60 @@ describe('cpf', () => {
 		expect(result).toBe(false);
 	});
 
-	it('should return true when cpf is valid', () => {
-		const cpfValue = '20978595009';
+	describe('validator', () => {
+		it('should return true for a valid CPF', () => {
+			const validCpf = '123.456.789-09';
+			expect(cpf.validator(validCpf)).toBe(true);
+		});
 
-		const result = cpf.validator(cpfValue);
+		it('should return false for a CPF with less than 11 digits', () => {
+			const invalidCpf = '123.456.789';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
 
-		expect(result).toBe(true);
+		it('should return false for a CPF with more than 11 digits', () => {
+			const invalidCpf = '123.456.789-012';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return false for a CPF with all digits the same', () => {
+			const invalidCpf = '111.111.111-11';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return false for an invalid CPF', () => {
+			const invalidCpf = '123.456.789-00';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return true for a valid CPF without formatting', () => {
+			const validCpf = '12345678909';
+			expect(cpf.validator(validCpf)).toBe(true);
+		});
+
+		it('should return false for a CPF with a rest of 11', () => {
+			const invalidCpf = '123.456.789-11';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return false for a CPF with an incorrect 10th digit', () => {
+			const invalidCpf = '123.456.789-08';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return false for a CPF with a rest of 10', () => {
+			const invalidCpf = '123.456.789-10';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return false for a CPF that results in rest equal to 11', () => {
+			const invalidCpf = '123.456.789-11';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
+
+		it('should return false for a CPF that results in rest equal to 10', () => {
+			const invalidCpf = '123.456.789-10';
+			expect(cpf.validator(invalidCpf)).toBe(false);
+		});
 	});
 });
