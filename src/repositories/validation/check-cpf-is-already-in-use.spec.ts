@@ -9,7 +9,7 @@ vi.mock('../fetch-registrations', () => ({
 }));
 
 describe('checkCpfIsAlreadyInUse', () => {
-	it('should throw error if cps is already registered', async () => {
+	it('should throw error if cpf is already registered', async () => {
 		const cpfValue = '123.456.789-00';
 		(fetchRegistrationsUseCase as Mock).mockResolvedValue([[]]);
 
