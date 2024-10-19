@@ -40,13 +40,11 @@ jobs:
 
       - name: Start dev server
         run: |
-          # Inicie o servidor em segundo plano
           pnpm dev &
 
       - name: Wait for dev server to be ready
         run: |
-          # Aguarde até que o servidor esteja disponível
-          npx wait-on http://localhost:3000
+          npx wait-on http://localhost:3001
 
       - name: Run Playwright tests
         run: pnpm playwright:e2e
