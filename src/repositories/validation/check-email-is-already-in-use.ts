@@ -1,4 +1,4 @@
-import { ResourceAlreadyExistsError } from '../errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from '../errors/resource-already-exists-error';
 import { fetchRegistrationsUseCase } from '../fetch-registrations';
 
 async function checkEmailIsAlreadyInUse(email: string) {

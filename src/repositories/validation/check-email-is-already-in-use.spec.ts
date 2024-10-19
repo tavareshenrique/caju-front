@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { describe, expect, it, Mock, vi } from 'vitest';
 
-import { ResourceAlreadyExistsError } from '../errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from '../errors/resource-already-exists-error';
 import { fetchRegistrationsUseCase } from '../fetch-registrations';
 import { checkEmailIsAlreadyInUse } from './check-email-is-already-in-use';
 
