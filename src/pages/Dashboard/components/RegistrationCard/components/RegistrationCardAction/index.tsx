@@ -2,9 +2,9 @@ import { HiOutlineTrash } from 'react-icons/hi';
 
 import { AlertDialog } from '@/components/atoms/AlertDialog';
 import { ButtonSmall } from '@/components/atoms/Buttons';
+import { TRegistrationCardStatus } from '@/pages/Dashboard/hooks/useRegistrationCard';
 import { TRegistrationStatus } from '@/repositories/interfaces/registration';
 
-import { TRegistrationCardStatus } from '../..';
 import { DeleteContainer } from './styles';
 
 interface IRegistrationCardCommonProps {
