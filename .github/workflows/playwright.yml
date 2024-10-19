@@ -47,4 +47,4 @@ jobs:
           npx wait-on http://localhost:3001
 
       - name: Run Playwright tests
-        run: pnpm playwright:e2e
+        run: pnpm exec playwright install
