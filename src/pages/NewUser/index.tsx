@@ -1,101 +1,18 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Helmet } from 'react-helmet';
-import { Controller, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import { Controller } from 'react-hook-form';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
-import { useHistory } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
-import { z } from 'zod';
 
 import { Button } from '@/components/atoms/Buttons';
 import { IconButton } from '@/components/atoms/Buttons/IconButton';
 import { TextField } from '@/components/molecules/TextField';
-import { createRegistrationUseCase } from '@/repositories/create-registration';
-import { ResourceAlreadyExistsError } from '@/repositories/errors/resource-already-exists';
-import { ValidationError } from '@/repositories/errors/validation-error';
-import routes from '@/router/routes';
 import { cpf } from '@/utils/cpf';
 
+import { useNewUserPage } from './hooks/useNewUserPage';
 import * as S from './styles';
 
-const newRegistrationSchema = z.object({
-	id: z.string().uuid(),
-	email: z.string().email('O email deve ser válido'),
-	admissionDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data inválida'),
-	status: z.string().default('PENDING'),
-	employeeName: z
-		.string()
-		.min(2, { message: 'O nome deve ter no mínimo 2 caracteres' })
-		.regex(/^[^\d]/, 'O nome não pode começar com um número'),
-	cpf: z.string().refine(cpf.validator, {
-		message: 'CPF inválido',
-	}),
-});
-
-export type TNewRegistrationSchema = z.infer<typeof newRegistrationSchema>;
-
-const NewUserPage = () => {
-	const {
-		handleSubmit,
-		control,
-		formState: { errors },
-		watch,
-		setError,
-	} = useForm<TNewRegistrationSchema>({
-		resolver: zodResolver(newRegistrationSchema),
-		defaultValues: {
-			id: uuid(),
-			admissionDate: '',
-			email: '',
-			status: 'PENDING',
-			employeeName: '',
-			cpf: '',
-		},
-	});
-
-	const history = useHistory();
-
-	const isSubmitButtonDisabled =
-		watch('employeeName') === '' ||
-		watch('email') === '' ||
-		watch('cpf') === '' ||
-		watch('admissionDate') === '';
-
-	const goToHome = () => {
-		history.push(routes.dashboard);
-	};
-
-	function handleError(error: ResourceAlreadyExistsError | ValidationError) {
-		setError(error.property as keyof TNewRegistrationSchema, {
-			message: error.message,
-		});
-
-		toast.error(error.message);
-	}
-
-	const onSubmit = handleSubmit(
-		async ({ admissionDate, cpf, email, employeeName, id, status }) => {
-			try {
-				await createRegistrationUseCase({
-					admissionDate,
-					cpf,
-					email,
-					employeeName,
-					id,
-					status,
-				});
-
-				goToHome();
-			} catch (error) {
-				if (
-					error instanceof ResourceAlreadyExistsError ||
-					error instanceof ValidationError
-				) {
-					handleError(error);
-				}
-			}
-		},
-	);
+function NewUserPage() {
+	const { onSubmit, goToHome, control, errors, isSubmitButtonDisabled } =
+		useNewUserPage();
 
 	return (
 		<>
@@ -177,6 +94,6 @@ const NewUserPage = () => {
 			</S.Container>
 		</>
 	);
-};
+}
 
-export default NewUserPage;
+export { NewUserPage };

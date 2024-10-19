@@ -13,11 +13,10 @@ function useChangeRegistrationStatus() {
 				id,
 				newStatus,
 			}),
-		onSuccess: () => {
+		onSuccess: () =>
 			queryClient.invalidateQueries({
 				queryKey: ['registrations'],
-			});
-		},
+			}),
 		onError: () => {
 			toast.error(
 				'Erro ao atualizar o status do registro, por favor, tente novamente!',

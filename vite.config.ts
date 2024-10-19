@@ -40,6 +40,7 @@ export default defineConfig({
 				'./src/pages/Dashboard/index.tsx',
 				'./src/pages/NewUser/index.tsx',
 				'src/hooks/http/**',
+				'src/pages/NewUser/hooks/useNewUserPage/**',
 			],
 		},
 	},
