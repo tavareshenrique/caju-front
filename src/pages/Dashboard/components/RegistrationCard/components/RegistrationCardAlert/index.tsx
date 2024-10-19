@@ -1,7 +1,7 @@
 import { AlertDialog } from '@/components/atoms/AlertDialog';
 import { Button } from '@/components/atoms/Buttons';
+import { TRegistrationCardStatus } from '@/pages/Dashboard/hooks/useRegistrationCard';
 
-import { TRegistrationCardStatus } from '../..';
 import * as S from './styles';
 
 const ALERT_DIALOG_MAPPER = {
@@ -84,7 +84,7 @@ function RegistrationCardAlert({
 		<AlertDialog.Portal>
 			<AlertDialog.Overlay />
 
-			<AlertDialog.Content>
+			<AlertDialog.Content data-testid="registration-card-alert">
 				<AlertDialog.Title>
 					{ALERT_DIALOG_MAPPER[status].title}
 				</AlertDialog.Title>

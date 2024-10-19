@@ -1,12 +1,7 @@
 import api from '@/libs/axios';
 
 import { ChangeRegistrationStatusError } from './errors/change-registration-status-error';
-import { TRegistrationStatus } from './interfaces/registration';
-
-export interface IRegistrationStatus {
-	id: string;
-	newStatus: TRegistrationStatus;
-}
+import { IRegistrationStatus } from './interfaces/registration';
 
 async function changeRegistrationStatusUseCase({
 	id,

@@ -77,7 +77,9 @@ function Pending({ status, onRegisterStatus }: IRegistrationCardCommonProps) {
 	);
 }
 
-function Delete({ onRegisterStatus }: IRegistrationCardCommonProps) {
+type TDeleteProps = Pick<IRegistrationCardCommonProps, 'onRegisterStatus'>;
+
+function Delete({ onRegisterStatus }: TDeleteProps) {
 	return (
 		<DeleteContainer onClick={() => onRegisterStatus('DELETE')}>
 			<HiOutlineTrash />

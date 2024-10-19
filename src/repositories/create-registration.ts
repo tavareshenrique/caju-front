@@ -5,12 +5,6 @@ import { CreateRegistrationError } from './errors/create-registration-error';
 import { ResourceAlreadyExistsError } from './errors/resource-already-exists';
 import { ValidationError } from './errors/validation-error';
 import { makeCreateRegistration } from './factories/make-create-registration';
-import { TRegistrationStatus } from './interfaces/registration';
-
-export interface IRegistrationStatus {
-	id: string;
-	newStatus: TRegistrationStatus;
-}
 
 async function createRegistrationUseCase(data: TNewRegistrationSchema) {
 	try {

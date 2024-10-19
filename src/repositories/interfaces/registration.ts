@@ -8,3 +8,8 @@ export type TRegistration = {
 	status: TRegistrationStatus;
 	cpf: string;
 };
+
+export interface IRegistrationStatus {
+	id: string;
+	newStatus: TRegistrationStatus;
+}

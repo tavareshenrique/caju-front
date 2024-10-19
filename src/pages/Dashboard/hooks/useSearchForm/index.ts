@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { TSearchSchema } from '..';
+import { TSearchSchema } from '../..';
 
 function useSearchForm() {
 	const methods = useFormContext<TSearchSchema>();

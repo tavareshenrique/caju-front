@@ -1,6 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
 import {
 	HiOutlineCalendar,
 	HiOutlineMail,
@@ -8,89 +5,20 @@ import {
 } from 'react-icons/hi';
 
 import { AlertDialog } from '@/components/atoms/AlertDialog';
-import {
-	changeRegistrationStatusUseCase,
-	IRegistrationStatus,
-} from '@/repositories/change-registration-status';
-import {
-	deleteRegistrationUseCase,
-	IDeleteRegistration,
-} from '@/repositories/delete-registration';
-import {
-	TRegistration,
-	TRegistrationStatus,
-} from '@/repositories/interfaces/registration';
+import { TRegistration } from '@/repositories/interfaces/registration';
 
+import { useRegistrationCard } from '../../hooks/useRegistrationCard';
 import { RegistrationCardAction } from './components/RegistrationCardAction';
 import { RegistrationCardAlert } from './components/RegistrationCardAlert';
 import * as S from './styles';
-
-export type TRegistrationCardStatus = TRegistrationStatus | 'DELETE';
 
 interface IRegistrationCardProps {
 	data: TRegistration;
 }
 
 function RegistrationCard({ data }: IRegistrationCardProps) {
-	const [status, setStatus] = useState<TRegistrationCardStatus | null>(null);
-
-	const queryClient = useQueryClient();
-
-	const updateStatusMutation = useMutation({
-		mutationFn: async ({ id, newStatus }: IRegistrationStatus) =>
-			changeRegistrationStatusUseCase({
-				id,
-				newStatus,
-			}),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['registrations'],
-			});
-		},
-		onError: () => {
-			toast.error(
-				'Erro ao atualizar o status do registro, por favor, tente novamente!',
-			);
-		},
-	});
-
-	const deleteMutation = useMutation({
-		mutationFn: async ({ id }: IDeleteRegistration) =>
-			deleteRegistrationUseCase({ id }),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['registrations'],
-			});
-		},
-		onError: () => {
-			toast.error('Erro ao deletar o registro, por favor, tente novamente!');
-		},
-	});
-
-	function handleRegistrationStatus(status: TRegistrationCardStatus) {
-		setStatus(status);
-	}
-
-	function handleConfirmationAction() {
-		if (!status) return;
-
-		if (status === 'DELETE') {
-			deleteMutation.mutate({
-				id: data.id,
-			});
-
-			setStatus(null);
-
-			return;
-		}
-
-		updateStatusMutation.mutate({
-			id: data.id,
-			newStatus: status,
-		});
-
-		setStatus(null);
-	}
+	const { handleConfirmationAction, handleRegistrationStatus, status } =
+		useRegistrationCard({ cardId: data.id });
 
 	return (
 		<AlertDialog.Root>
@@ -128,7 +56,6 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 
 					<RegistrationCardAction.Delete
 						onRegisterStatus={handleRegistrationStatus}
-						status={data.status}
 					/>
 				</S.Actions>
 			</S.Card>

@@ -9,11 +9,11 @@ import {
 import toast from 'react-hot-toast';
 
 import { Skeleton } from '@/components/atoms/Skeleton';
+import { changeRegistrationStatusUseCase } from '@/repositories/change-registration-status';
 import {
-	changeRegistrationStatusUseCase,
 	IRegistrationStatus,
-} from '@/repositories/change-registration-status';
-import { TRegistration } from '@/repositories/interfaces/registration';
+	TRegistration,
+} from '@/repositories/interfaces/registration';
 
 import { RegistrationCard } from '../RegistrationCard';
 import { EmptyRegister } from './EmptyRegister';
