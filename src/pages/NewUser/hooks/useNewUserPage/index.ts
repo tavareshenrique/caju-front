@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 
 import { createRegistrationUseCase } from '@/repositories/create-registration';
-import { ResourceAlreadyExistsError } from '@/repositories/errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from '@/repositories/errors/resource-already-exists-error';
 import { ValidationError } from '@/repositories/errors/validation-error';
 import routes from '@/router/routes';
 import { cpf } from '@/utils/cpf';
