@@ -17,10 +17,6 @@ jobs:
         image: vimagick/json-server
         ports:
           - 3000:3000
-        options: >-
-          --network=host
-        env:
-          JSON_SERVER_PORT: 3000
         volumes:
           - ./db-e2e.json:/data/db.json
 
@@ -31,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # ou a versão que você estiver usando
+          node-version: '20'
 
       - name: Install dependencies
         run: pnpm install
