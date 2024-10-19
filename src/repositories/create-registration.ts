@@ -1,8 +1,8 @@
 import api from '@/libs/axios';
-import { TNewRegistrationSchema } from '@/pages/NewUser';
+import { TNewRegistrationSchema } from '@/pages/NewUser/hooks/useNewUserPage';
 
 import { CreateRegistrationError } from './errors/create-registration-error';
-import { ResourceAlreadyExistsError } from './errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from './errors/resource-already-exists-error';
 import { ValidationError } from './errors/validation-error';
 import { makeCreateRegistration } from './factories/make-create-registration';
 
