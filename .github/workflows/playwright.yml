@@ -14,10 +14,10 @@ jobs:
 
     services:
       json-server:
-        image: typicode/json-server
+        image: clue/json-server
         ports:
           - 3001:3000
-        options:
+        options: >-
           --network=host
         env:
           JSON_SERVER_PORT: 3000
@@ -31,17 +31,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '16' # ou a versão que você estiver usando
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Start dev server
         run: |
+          # Inicie o servidor em segundo plano
           pnpm dev &
 
       - name: Wait for dev server to be ready
         run: |
+          # Aguarde até que o servidor esteja disponível
           npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
