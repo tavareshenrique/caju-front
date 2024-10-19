@@ -1,6 +1,6 @@
 import { describe, expect, it, Mock, vi } from 'vitest';
 
-import { ResourceAlreadyExistsError } from '../errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from '../errors/resource-already-exists-error';
 import { fetchRegistrationsUseCase } from '../fetch-registrations';
 import { checkCpfIsAlreadyInUse } from './check-cpf-is-already-in-use';
 
