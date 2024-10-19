@@ -31,7 +31,7 @@ export default defineConfig({
 				'./src/main.tsx',
 				'./src/libs/**',
 				'./src/router/**',
-				'./src/repositories/errors/*.ts',
+				'**/*-error.ts',
 				'**/playwright-report/**',
 				'.eslintrc.cjs',
 				'**/*.spec.ts',
