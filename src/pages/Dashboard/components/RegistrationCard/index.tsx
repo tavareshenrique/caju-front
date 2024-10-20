@@ -6,6 +6,7 @@ import {
 
 import { AlertDialog } from '@/components/atoms/AlertDialog';
 import { TRegistration } from '@/repositories/interfaces/registration';
+import { generateSlug } from '@/utils/generate-slug';
 
 import { useRegistrationCard } from '../../hooks/useRegistrationCard';
 import { RegistrationCardAction } from './components/RegistrationCardAction';
@@ -22,7 +23,9 @@ function RegistrationCard({ data }: IRegistrationCardProps) {
 
 	return (
 		<AlertDialog.Root>
-			<S.Card>
+			<S.Card
+				data-testid={`registration-card-${generateSlug(data.employeeName)}-${data.status.toLowerCase()}`}
+			>
 				<S.IconAndText>
 					<HiOutlineUser />
 					<h3>{data.employeeName}</h3>
