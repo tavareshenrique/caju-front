@@ -1,4 +1,4 @@
-name: Run Playwright Tests
+name: Run Playwright and Vitest Tests
 
 on:
   push:
@@ -49,3 +49,25 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+  unit-integrations-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run unit and integration tests
+        run: pnpm test
