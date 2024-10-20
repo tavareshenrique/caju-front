@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { expect, test } from '@playwright/test';
+import generateCpf from 'gerar-cpf';
 
 import { TPerson } from './interfaces/person';
 
@@ -7,7 +8,7 @@ test('should validate if name not start with number', async ({ page }) => {
 	const person = {
 		name: '123 failed name',
 		email: faker.internet.email(),
-		cpf: '094.594.590-64',
+		cpf: generateCpf(),
 		admissionDate: '2024-10-10',
 	} as TPerson;
 
@@ -75,7 +76,7 @@ test('should not register with a date in the future', async ({ page }) => {
 	const person = {
 		name: faker.person.firstName(),
 		email: faker.internet.email(),
-		cpf: '094.594.590-64',
+		cpf: generateCpf(),
 		admissionDate: '2099-10-10',
 	} as TPerson;
 

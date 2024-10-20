@@ -1,15 +1,17 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { expect, test } from '@playwright/test';
+import generateCpf from 'gerar-cpf';
 
+import { generateSlug } from '../src/utils/generate-slug';
 import { addNewRegistration } from './helpers/add-new-registration';
 import { deleteRegistration } from './helpers/delete-registration';
-import { TPerson } from './new-registration.spec';
+import { TPerson } from './interfaces/person';
 
 test.describe('Buttons Events', () => {
 	const person = {
 		name: faker.person.firstName(),
 		email: faker.internet.email(),
-		cpf: '422.390.580-56',
+		cpf: generateCpf(),
 		admissionDate: '2024-10-10',
 	} as TPerson;
 
@@ -24,7 +26,9 @@ test.describe('Buttons Events', () => {
 
 		await addNewRegistration(page, person);
 
-		expect(page.getByRole('button', { name: person.name })).toBeVisible();
+		const personButton = page.getByRole('button', { name: person.name });
+
+		await expect(personButton).toBeVisible();
 	});
 
 	test('should be possible to register a new registration and move it to APPROVED', async ({
@@ -34,10 +38,9 @@ test.describe('Buttons Events', () => {
 
 		await addNewRegistration(page, person);
 
-		const approvedButton = page.getByRole('button', {
-			name: 'Aprovar',
-			exact: true,
-		});
+		const approvedButton = page
+			.getByTestId(`registration-card-${generateSlug(person.name)}-pending`)
+			.getByRole('button', { name: 'Aprovar' });
 
 		await approvedButton.click();
 
@@ -47,9 +50,13 @@ test.describe('Buttons Events', () => {
 
 		await confirmApprovedButton.click();
 
-		page.waitForTimeout(1000);
+		await page.waitForTimeout(1000);
 
-		expect(page.getByText(`Aprovado${person.name}`)).toBeVisible();
+		const approvedCard = page.getByTestId(
+			`registration-card-${generateSlug(person.name)}-approved`,
+		);
+
+		await expect(approvedCard).toBeVisible();
 	});
 
 	test('should be possible to register a new registration and move it to REJECTED', async ({
@@ -59,10 +66,9 @@ test.describe('Buttons Events', () => {
 
 		await addNewRegistration(page, person);
 
-		const rejectedButton = page.getByRole('button', {
-			name: 'Reprovar',
-			exact: true,
-		});
+		const rejectedButton = page
+			.getByTestId(`registration-card-${generateSlug(person.name)}-pending`)
+			.getByRole('button', { name: 'Reprovar' });
 
 		await rejectedButton.click();
 
@@ -74,9 +80,13 @@ test.describe('Buttons Events', () => {
 
 		await confirmRejectedButton.click();
 
-		page.waitForTimeout(1000);
+		await page.waitForTimeout(1000);
 
-		expect(page.getByText(`Reprovado${person.name}`)).toBeVisible();
+		const rejectedCard = page.getByTestId(
+			`registration-card-${generateSlug(person.name)}-rejected`,
+		);
+
+		await expect(rejectedCard).toBeVisible();
 	});
 
 	test('should be possible to register a new registration and move it to PENDING', async ({
@@ -86,10 +96,9 @@ test.describe('Buttons Events', () => {
 
 		await addNewRegistration(page, person);
 
-		const rejectedButton = page.getByRole('button', {
-			name: 'Reprovar',
-			exact: true,
-		});
+		const rejectedButton = page
+			.getByTestId(`registration-card-${generateSlug(person.name)}-pending`)
+			.getByRole('button', { name: 'Reprovar' });
 
 		await rejectedButton.click();
 
@@ -103,12 +112,15 @@ test.describe('Buttons Events', () => {
 
 		page.waitForTimeout(1000);
 
-		expect(page.getByText(`Reprovado${person.name}`)).toBeVisible();
+		const rejectedCard = page.getByTestId(
+			`registration-card-${generateSlug(person.name)}-rejected`,
+		);
 
-		const pendingButton = page.getByRole('button', {
-			name: 'Revisar novamente',
-			exact: true,
-		});
+		await expect(rejectedCard).toBeVisible();
+
+		const pendingButton = page
+			.getByTestId(`registration-card-${generateSlug(person.name)}-rejected`)
+			.getByRole('button', { name: 'Revisar novamente' });
 
 		await pendingButton.click();
 
@@ -120,7 +132,13 @@ test.describe('Buttons Events', () => {
 
 		await confirmPendingButton.click();
 
-		expect(page.getByText(`Pronto para revisar${person.name}`)).toBeVisible();
+		page.waitForTimeout(1000);
+
+		const pendingCard = page.getByTestId(
+			`registration-card-${generateSlug(person.name)}-pending`,
+		);
+
+		await expect(pendingCard).toBeVisible();
 	});
 });
 
@@ -128,14 +146,14 @@ test.describe('Filter', () => {
 	const person1 = {
 		name: faker.person.firstName(),
 		email: faker.internet.email(),
-		cpf: '422.390.580-56',
+		cpf: generateCpf(),
 		admissionDate: '2024-10-10',
 	} as TPerson;
 
 	const person2 = {
 		name: faker.person.firstName(),
 		email: faker.internet.email(),
-		cpf: '416.707.600-49',
+		cpf: generateCpf(),
 		admissionDate: '2024-10-15',
 	} as TPerson;
 
@@ -150,8 +168,15 @@ test.describe('Filter', () => {
 		await addNewRegistration(page, person1);
 		await addNewRegistration(page, person2);
 
-		expect(page.getByRole('button', { name: person1.name })).toBeVisible();
-		expect(page.getByRole('button', { name: person1.name })).toBeVisible();
+		const person1Card = page.getByTestId(
+			`registration-card-${generateSlug(person1.name)}-pending`,
+		);
+		const person2Card = page.getByTestId(
+			`registration-card-${generateSlug(person2.name)}-pending`,
+		);
+
+		await expect(person1Card).toBeVisible();
+		await expect(person2Card).toBeVisible();
 
 		const cpfInput = page.getByPlaceholder('Digite um CPF válido');
 
@@ -159,14 +184,14 @@ test.describe('Filter', () => {
 
 		page.waitForTimeout(1000);
 
-		const register1 = page.getByRole('button', { name: person1.name });
-		const register2 = page.getByRole('button', { name: person2.name });
-
-		expect(register1).toBeHidden();
-		expect(register2).toBeVisible();
+		expect(person1Card).toBeHidden();
+		expect(person2Card).toBeVisible();
 
 		await cpfInput.fill('');
 
 		page.waitForTimeout(1000);
+
+		await expect(person1Card).toBeVisible();
+		await expect(person2Card).toBeVisible();
 	});
 });
