@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 
-import { TPerson } from '../new-registration.spec';
+import { TPerson } from '../interfaces/person';
 
 export async function deleteRegistration(page: Page, person: TPerson) {
 	const deleteCardButton = page

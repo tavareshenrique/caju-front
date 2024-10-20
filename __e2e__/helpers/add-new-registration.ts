@@ -1,6 +1,6 @@
 import { expect, Page } from '@playwright/test';
 
-import { TPerson } from '../dashboard.spec';
+import { TPerson } from '../interfaces/person';
 
 export async function addNewRegistration(page: Page, person: TPerson) {
 	const addNewRegistrationButton = page
