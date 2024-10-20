@@ -93,7 +93,7 @@ Adicionei o arquivo `.editorconfig` para manter a padronização do código.
 
 ### PNPM
 
-Resolvi usar o PNPM para instalar as dependências, é o que tenho usado atualmente, vejo umas boas vantagens nele, e como não havia uma restrição para isso, resolvi usar.
+Resolvi usar o PNPM para instalar as dependências, é o que tenho usado atualmente, vejo umas boas vantagens nele, ele se destaca pelo uso eficiente de armazenamento, ao compartilhar dependências comuns entre projetos, o que reduz espaço em disco. Ele também oferece uma instalação mais rápida e segura, evitando problemas de duplicação de dependências. Enquanto Yarn também é rápido e seguro, o PNPM geralmente é mais eficiente em grandes monorepos. Comparado ao NPM, que melhorou ao longo dos anos, o PNPM ainda supera em desempenho e organização de dependências, sendo ideal para projetos de grande escala, apesar de não ser o caso desse projeto, mas é sempre bom usar o que é melhor.
 
 ### Import Path
 
@@ -118,7 +118,7 @@ Foi implementado testes unitários e de integração, para garantir a qualidade 
 
 Foi implementado testes E2E, para garantir a qualidade do código, e para isso foi utilizado o [Playwright](https://playwright.dev/).
 
-> Por que foi usado o Playwright? Resumindo, apenas por curiosidade, e validação de ferramenta, ainda não tinha tido a oportunidade de usar, e resolvi testar. Além disso, ele consegue rodar várias browsers ao mesmo tempo, o que é bem interessante.
+> Por que foi usado o Playwright? Primeiro, porque o Playwright se destaca em relação ao Cypress por oferecer suporte a múltiplos navegadores (Chromium, Firefox, WebKit), enquanto o Cypress só suporta o Chrome e o Firefox. Ele também permite rodar testes em diferentes contextos de dispositivos e oferece maior flexibilidade para testes paralelos. Além disso, o Playwright possui um melhor desempenho em grandes suítes de teste e em integração com CI/CD. Além disso, foi escolhido também para validação de ferramenta, ao contrário do Cypress que já tive oportunidade de trabalhar, eu inda não tinha tido a oportunidade de usar, e resolvi testar.
 
 ![e2e](https://raw.githubusercontent.com/tavareshenrique/caju-front/refs/heads/main/.previews/e2e.gif)
 
