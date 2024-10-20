@@ -60,7 +60,6 @@
     "eslint": "8.57.0",
     "eslint-config-henrique": "2.0.4",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "gerador-validador-cpf": "5.0.2",
     "gerar-cpf": "3.1.0",
     "happy-dom": "15.7.4",
     "npm-run-all": "4.1.5",
