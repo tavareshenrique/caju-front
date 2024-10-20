@@ -5,6 +5,7 @@ import { TRegistration } from '@/repositories/interfaces/registration';
 
 import { useDragAndDrop } from '../../hooks/useDragAndDrop';
 import { RegistrationCard } from '../RegistrationCard';
+import { ColumnsSkeleton } from './ColumnsSkeleton';
 import { EmptyRegister } from './EmptyRegister';
 import * as S from './styles';
 
@@ -14,7 +15,7 @@ export enum ERegistrationStatus {
 	PENDING = 'PENDING',
 }
 
-const allColumns = [
+export const allColumns = [
 	{ status: ERegistrationStatus.PENDING, title: 'Pronto para revisar' },
 	{ status: ERegistrationStatus.APPROVED, title: 'Aprovado' },
 	{ status: ERegistrationStatus.REJECTED, title: 'Reprovado' },
@@ -30,6 +31,10 @@ function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
 
 	const hasRegistrations = registrations && registrations.length > 0;
 	const hasNoRegistrations = !registrationIsLoading && !hasRegistrations;
+
+	if (registrationIsLoading || !columns) {
+		return <ColumnsSkeleton />;
+	}
 
 	if (hasNoRegistrations || !columns) {
 		return <EmptyRegister />;
@@ -50,7 +55,7 @@ function Columns({ registrationIsLoading, registrations }: IColumnsProps) {
 									{column.title}
 								</S.TitleColumn>
 								<S.ColumContent>
-									{registrationIsLoading ? (
+									{registrationIsLoading && !columns ? (
 										<Skeleton
 											size={{
 												height: 144,
