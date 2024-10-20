@@ -13,27 +13,42 @@ Foi solicitado as seguintes funcionalidades abaixo, e todas foram implementadas,
 
 ### Tela Dashboard
 
-:white_check_mark: Implementar `GET` ao carregar a pagina e ao fazer pequisa por `CPF`
-:white_check_mark: Filtrar os cards por coluna, usando o status.
-:white_check_mark: Implementar `PUT` ao clicar em Reprovar e alterar o status para `REPROVED`
-:white_check_mark: Implementar `PUT` ao clicar em Aprovar e alterar o status para `APPROVED`
-:white_check_mark: Implementar `PUT` ao clicar em Revisar novamente e alterar o status para `REVIEW`
-:white_check_mark: Implementar `DELETE` ao clicar no lixeira no card.
-:white_check_mark: O botão de `Reprovar` e `Aprovar` só deve aparecer em admissões com o status `REVIEW`
-:white_check_mark: O botão `Revisar novamente` só deve aparecer em admissões com o status `REPROVED` ou `APPROVED`
-:white_check_mark: Implementar um loading na tela ao realizar requisições.
-:white_check_mark: Todas as ações devem ter modal de confirmação e uma notificação de sucesso ou erro
-:white_check_mark: Adicionar máscara de CPF no campo de pesquisa.
-:white_check_mark: Atualizar os dados (refetch) ao clicar no ícone de atualizar
+- :white_check_mark: Implementar `GET` ao carregar a pagina e ao fazer pequisa por `CPF`;
+
+- :white_check_mark: Filtrar os cards por coluna, usando o status;
+
+- :white_check_mark: Implementar `PUT` ao clicar em Reprovar e alterar o status para `REPROVED`;
+
+- :white_check_mark: Implementar `PUT` ao clicar em Aprovar e alterar o status para `APPROVED`;
+
+- :white_check_mark: Implementar `PUT` ao clicar em Revisar novamente e alterar o status para `REVIEW`;
+
+- :white_check_mark: Implementar `DELETE` ao clicar no lixeira no card;
+
+- :white_check_mark: O botão de `Reprovar` e `Aprovar` só deve aparecer em admissões com o status `REVIEW`;
+
+- :white_check_mark: O botão `Revisar novamente` só deve aparecer em admissões com o status `REPROVED` ou `APPROVED`;
+
+- :white_check_mark: Implementar um loading na tela ao realizar requisições;
+
+- :white_check_mark: Todas as ações devem ter modal de confirmação e uma notificação de sucesso ou erro;
+
+- :white_check_mark: Adicionar máscara de CPF no campo de pesquisa;
+
+- :white_check_mark: Atualizar os dados (refetch) ao clicar no ícone de atualizar;
 
 
 ### Tela Cadastro
 
-:white_check_mark:  Implementar validação no campo de `email` para que aceite apenas emails válidos
-:white_check_mark:  Implementar validação no campo `nome completo` para que aceite pelo menos um espaço, no mínimo duas letras, e que a primeira letra não seja um número.
-:white_check_mark:  Implementar validação no campo CPF para aceitar apenas CPFs válidos e adicionar uma máscara de CPF ao campo.
-:white_check_mark:  Implementar `POST` ao preencher todos os campos corretamentes.
-:white_check_mark:  Redirecionar ao `/dashboard` ao criar uma nova admissão.
+- :white_check_mark:  Implementar validação no campo de `email` para que aceite apenas emails válidos;
+
+- :white_check_mark:  Implementar validação no campo `nome completo` para que aceite pelo menos um espaço, no mínimo duas letras, e que a primeira letra não seja um número.;
+
+- :white_check_mark:  Implementar validação no campo CPF para aceitar apenas CPFs válidos e adicionar uma máscara de CPF ao campo;
+
+- :white_check_mark:  Implementar `POST` ao preencher todos os campos corretamentes;
+
+- :white_check_mark:  Redirecionar ao `/dashboard` ao criar uma nova admissão;
 
 ## Novas Funcionalidades
 
