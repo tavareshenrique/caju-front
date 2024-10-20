@@ -10,6 +10,7 @@
     "build": "tsc && vite build",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:ci": "NODE_OPTIONS='--no-deprecation' vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "npm-run-all -p -r init:db:e2e dev playwright:e2e:ui",
     "test:e2e:ci": "npm-run-all -p -r init:db:e2e dev playwright:e2e",
