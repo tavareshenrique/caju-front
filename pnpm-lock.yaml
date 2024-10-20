@@ -126,6 +126,9 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: 12.1.1
         version: 12.1.1(eslint@8.57.0)
+      gerar-cpf:
+        specifier: 3.1.0
+        version: 3.1.0
       happy-dom:
         specifier: 15.7.4
         version: 15.7.4
@@ -1702,6 +1705,9 @@ packages:
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
+
+  gerar-cpf@3.1.0:
+    resolution: {integrity: sha512-gdQT1NnvBrpg3ZwxwG+VLdqOsrt/H04/YOfeohHxHhMsjQslLtz/iQ6gpGdkyu81riquwqSYDg8THvWgkqdz7A==}
 
   get-caller-file@2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
@@ -4750,6 +4756,8 @@ snapshots:
   functions-have-names@1.2.3: {}
 
   gensync@1.0.0-beta.2: {}
+
+  gerar-cpf@3.1.0: {}
 
   get-caller-file@2.0.5: {}
 
