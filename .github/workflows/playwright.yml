@@ -35,12 +35,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Start dev server
         run: |
-          pnpm dev &
+          pnpm dev & pnpm init:db:e2e
+
+      - name: Wait for server to be ready
+        run: |
+          npx wait-on http://localhost:3000
 
       - name: Wait for dev server to be ready
         run: |
