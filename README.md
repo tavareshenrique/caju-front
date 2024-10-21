@@ -59,6 +59,8 @@ Uma nova funcionalidade que foi implementada, que é o Drag and Drop, onde é po
 
 ![Drag and Drop](https://raw.githubusercontent.com/tavareshenrique/caju-front/refs/heads/main/.previews/Drag-And-Drop-Action.gif)
 
+> Vale destacar que usei o [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) da Atlassian, ferramenta de Drop And Droll consolidada no mercado, existe várias, mas por ter a Atlassian por trás, resolvi usar. Porém, coincidentemente, na mesma semana de desenvolvimento desse projeto, a Atlassian anunciou a depreciação do projeto, eles estão lançando um novo projeto chamado [pragmatic-drag-and-drop](https://github.com/atlassian/pragmatic-drag-and-drop), que é uma evolução do react-beautiful-dnd, mas como o projeto já estava em andamento, resolvi manter o react-beautiful-dnd mesmo, porque ainda tem suporte, e traria mais custos de migração do que benefícios, eles também indicaram o [dndkit](https://dndkit.com/), mas é o mesmo cenário.
+
 ### Docker
 
 Foi adicionado o Docker para facilitar a execução da aplicação, e para isso foi criado um arquivo `Dockerfile` e um `docker-compose.yml` para facilitar a execução da aplicação.
@@ -210,3 +212,14 @@ Rodando Testes E2E via CLI
 ```shell
 pnpm test:e2e:ci
 ```
+
+## Próximos Passos
+
+Abaixo uma lista de melhorias e evoluções do projeto para o futuro:
+
+- [ ] Trocar a lib de DND;
+- [ ] Criar o Error Boundary;
+- [ ] Adicionar o Storybook;
+- [ ] Adicionar o Husky;
+- [ ] Aplicar Responsividade visando Mobile;
+- [ ] Melhorar performance do CI;
